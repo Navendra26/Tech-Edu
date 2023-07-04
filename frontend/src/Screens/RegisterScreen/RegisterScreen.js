@@ -64,7 +64,7 @@ const RegisterScreen = () => {
             name,
             email,
             password,
-            pic,
+           
           },
           config
         );
@@ -94,7 +94,7 @@ const RegisterScreen = () => {
     const data = new FormData();      // whenever we want to uplode new file we create new FormData <-- basic html
     data.append('file', pics);   // add a new field for pics
     data.append('upload_preset', 'notezipper');  // add upload_preset
-    data.append('cloud_name', 'mysuperclouds');   // my clouds name in cloudinary(or anything)
+    data.append('cloud_name', 'mysuperclouds');   // my clouds name in mysuperclouds(or anything)
     fetch("https://api.cloudinary.com/v1_1/mysuperclouds/image/upload", {
       method:"post",
       body: data,
@@ -169,7 +169,7 @@ const RegisterScreen = () => {
               id="custom-file"
               type="file"
               label="Upload Profile Picture"
-              custom
+              custom="true"
             />
           </Form.Group>
 

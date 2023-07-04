@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { Accordion, Badge, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Mainscreen from "../../components/Mainscreen";
-// import axios from "axios";   it had been imported bcz we were fetching notes diretly from the server's api
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, listNotes } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 
-const MyNotes = ({search}) => {
+const Automotive = ({ search }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -31,6 +30,8 @@ const MyNotes = ({search}) => {
     success: successDelete,
   } = noteDelete;
 
+  const itNotes = notes?.filter((note) => note.category === "Automotive Technology");
+
   const deleteNoteHandler = (id) => {
     if(userInfo){
     if (window.confirm("Are you sure?")) {
@@ -40,35 +41,18 @@ const MyNotes = ({search}) => {
   else {
     alert("For this action you need to login :(");
   }};
-  /* 
-   const [note, setNote] = useState([]);   //this was written bcz we were fetching notes directly from the api 
-                                              //(now we gonna getting notes from our database by using Redux) 
-
- 
-         // for fetching dara from api(s) we need to install axios.
-        // OR we can also fetch api by using fetch keyword instead of installing axios.
-
- // connecting backend to the frontend by using fetch or axios(here)
- const fetchNotes = async () => {
-   const {data }= await axios.get("/api/notes");  //path will be this becoz our every request will go port 5000 thru port 3000
-
-   setNotes(data);
- } */
 
   useEffect(() => {
-    // fetchNotes();
-
     dispatch(listNotes()); // redirecting to listNotes() defined within notesAction.js
    /*  if (!userInfo ) {
       navigate("/");
     } */
   }, [dispatch, noteCreate, noteUpdate, noteDelete, navigate, userInfo]); // whenever any of this are changes the useEffect rerender the page
 
-
   return (
-    <Mainscreen title= {userInfo ?`Welcome Back To our All Contents ${userInfo.name}..`: "WelCome to Our Tech-Ed "}>
-      <Link to={userInfo ? "createnote" : "/login"}>
-        {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after mynotes/ */}
+    <Mainscreen title= "WelCome to Automotive Technology">
+      <Link to={userInfo ? "/mynotes/createnote" : "/login"}>
+        {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after InfoTech/ */}
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Contents
         </Button>
@@ -76,10 +60,10 @@ const MyNotes = ({search}) => {
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
       )}
-     
+      {loadingDelete && <Loading />}
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       {loading && <Loading />}
-      {notes   // '?' over here is for optional chaining
+      {itNotes   // '?' over here is for optional chaining
         ?.reverse()       /* reverse() is used for rendring noteList from bottom to top */
         .filter((filteredNote) =>  /* filter() is used for - when we search any note it filter accordingly our note list */
           filteredNote.title.toLowerCase().includes(search.toLowerCase())   /* as we want to sameCase for comparision so we used toLowerCase() */
@@ -123,30 +107,7 @@ const MyNotes = ({search}) => {
                         <Badge bg="success">Catagory - {note.category}</Badge>
                       </h4>
                       <blockquote className="blockquote mb-0">
-                        <div
-                         style={{
-                          display: "flex",
-                          alignItem: "center",
-                          justifyContent: "space-between",
-                        }}>
                         <p>{note.content}</p>
-                         <img src={note.pictures[0]}   />
-                         <img src={note.pictures[1]}   />
-                         <img src={note.pictures[2]}   />
-                         </div>
-                       { (note.ytVideos.length === 0) ? "" : ( <div style={{
-                           boxSizing: "border-box",
-                           border: "1px solid",
-                           textAlign: "center",
-                           padding: "4px",
-                         }}>
-                           <h4>{note.videoCaption}:</h4>
-                           <a 
-                           style={{
-                             color: "blue",
-                             textDecoration: "underline",
-                           }} href={note.ytVideos}>{note.ytVideos}</a>
-                         </div>) }
                         <footer className="blockquote-footer">
                           Created on{" "}
                           <cite title="Source Title">
@@ -166,4 +127,4 @@ const MyNotes = ({search}) => {
   );
 };
 
-export default MyNotes;
+export default Automotive;

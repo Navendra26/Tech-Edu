@@ -135,7 +135,6 @@ const ProfileScreen = () => {
                 <Form.Control
                 type="file"
                 id="custom-file"
-                placeholder="Confirm Password"
                 label="Upload Profile Picture"
                 custom
                 onChange={(e) => postDetails(e.target.files[0])}
@@ -148,7 +147,7 @@ const ProfileScreen = () => {
           </Col> 
           <Col 
             style={{
-              display: "fles",
+              display: "flex",
               alignItem: "center",
               justifyContent: "center",
             }}

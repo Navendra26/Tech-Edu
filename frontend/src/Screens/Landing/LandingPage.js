@@ -20,8 +20,8 @@ const LandingPage = () => {
         <Row>
           <div className="intro-text">
             <div className="div">
-              <h1 className="title">Welcome to Note Zipper</h1>
-              <p className="subtitle">One Safe place for all your notes.</p>
+              <h1 className="title">Welcome to Our Technical World</h1>
+              <p className="subtitle">One of the best place for your Technical education</p>
             </div>
             <div className="buttonContainer">
               <a href="/login">

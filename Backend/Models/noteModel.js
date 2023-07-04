@@ -5,7 +5,7 @@
    const mongoose = require('mongoose');
    const bcrypt = require('bcryptjs');
    
-   const noteSchema = mongoose.Schema(
+   const contentSchema = mongoose.Schema(
      {
        title: {
          type: String,
@@ -19,6 +19,19 @@
          type: String,
          required: true,
        },
+       author:{
+         type: String,
+         required: true,
+       },
+       pictures: {
+        type: Array,
+       },
+       videoCaption:{
+         type:Array,
+       },
+       ytVideos :{
+        type: Array,
+       },
        user: {
          type: mongoose.Schema.Types.ObjectId,
          required: true,
@@ -30,6 +43,6 @@
      }
    );
    
-   const Note = mongoose.model("Note", noteSchema);
+   const Content = mongoose.model("Note", contentSchema);
    
-   module.exports = Note;  // exported to noteController
+   module.exports = Content;  // exported to noteController

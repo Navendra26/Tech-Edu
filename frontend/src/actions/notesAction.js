@@ -32,11 +32,45 @@ export const listNotes = () => async (dispatch, getState) => {
     const config = {
       // as note is protected so have to give Authorization to user by their token
       headers: {
-        Authorization: `Bearer ${userInfo.token}`,
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${userInfo.token}`,
       },
     };
 
-    const { data } = await axios.get("/api/notes", config);
+    const { data}  = await axios.get("/api/notes", config);
+
+    dispatch({
+      type: NOTES_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const message = // error message coming from the backend
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({
+      type: NOTES_LIST_FAIL,
+      payload: message,
+    });
+  }
+};
+
+export const list10sortedNotes = () => async (dispatch, getState) => {
+  // nested arrow function is only possible by the redux thunk
+  try {
+    dispatch({
+      type: NOTES_LIST_REQUEST,
+    });
+
+    const config = {
+      // as note is protected so have to give Authorization to user by their token
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get("/api/notes/sorted10contents", config);
 
     dispatch({
       type: NOTES_LIST_SUCCESS,
@@ -55,7 +89,7 @@ export const listNotes = () => async (dispatch, getState) => {
 };
 
 export const createNoteAction = // exported to createNote.js file
-  (title, content, category) => async (dispatch, getState) => {
+  (title, content, category, author, pictures, videoCaption, ytVideos) => async (dispatch, getState) => {
     try {
       dispatch({
         type: NOTES_CREATE_REQUEST,
@@ -74,7 +108,7 @@ export const createNoteAction = // exported to createNote.js file
 
       const { data } = await axios.post(
         "/api/notes/create",
-        { title, content, category },
+        { title, content, category, author, pictures, videoCaption, ytVideos },
         config
       );
 
@@ -96,7 +130,7 @@ export const createNoteAction = // exported to createNote.js file
 
 
 export const updateNoteAction =
-  (id, title, content, category) => async (dispatch, getState) => {
+  (id, title, content, category, author, pictures) => async (dispatch, getState) => {
     try {
       dispatch({
         type: NOTES_UPDATE_REQUEST,
@@ -115,7 +149,7 @@ export const updateNoteAction =
 
       const { data } = await axios.put(
         `/api/notes/${id}`,
-        { title, content, category },
+        { title, content, category, author, pictures },
         config
       );
 

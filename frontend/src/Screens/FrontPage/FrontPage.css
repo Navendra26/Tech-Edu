@@ -1,0 +1,29 @@
+.background{
+     
+  text-align: center;
+  border: 2px solid;
+  height: 90vh;
+   background-image: url('./images/background2.jpg');
+   background-size: cover;
+}
+.list{
+  display :flex;
+  flex-direction: column; 
+}
+.list li{
+  display: flex;
+  margin-left: 5px;
+  padding-bottom: 10px;
+  font-size: 15px;
+  color: azure;
+}
+.list li:hover{
+  text-decoration: underline;
+  text-decoration-color: black;
+  
+}
+@media screen and (max-width: 600px) {
+  .list li{
+    font-size: 10px;
+  }
+}
