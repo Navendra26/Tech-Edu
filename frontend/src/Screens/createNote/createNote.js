@@ -26,19 +26,24 @@ function CreateNote() {
   const noteCreate = useSelector((state) => state.noteCreate);  // taking state from noteReducer
   const { loading, error } = noteCreate;
 
+  const userLogin = useSelector((state) => state.userLogin); //using this state becoz we want to go on login screen page whenever user logout
+  const { userInfo } = userLogin;
+
   const resetHandler = () => {
     setTitle("");
     setCategory("");
     setContent("");
     setAuthor("");
-    setfiles("");
+    setfiles([]);
     setVideoCap([]);
     setytVideos([]);
   };
+ 
+  const createdBy = userInfo.name;
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createNoteAction(title, content, category, author, files, videoCaption, ytVideos));
+    dispatch(createNoteAction(title, content, category, author, files, videoCaption, ytVideos, createdBy));
     if (!title || !content || !category || !author) return;
  
     resetHandler();
@@ -147,9 +152,9 @@ function CreateNote() {
               <Form.Label>YouTube Video links (if any)</Form.Label>
               <Form.Control multiple
                 type="ytVideos"
-                name="ytVideos[]"
+                name="Arrays[]"
                value={ytVideos}
-                placeholder="Enter the links Name"
+                placeholder="Put your video link here"
                 onChange={(e) => setytVideos(e.target.value)}
               />
             </Form.Group>
@@ -157,15 +162,15 @@ function CreateNote() {
               <Form.Label>Caption to for your youtube video link</Form.Label>
               <Form.Control multiple
                 type="videoCaption"
-                name="videoCation[]"
+                name="Arrays[]"
                 value={videoCaption}
-                placeholder="Enter the Captions Name"
+                placeholder="video title"
                 onChange={(e) => setVideoCap(e.target.value)}
               />
             </Form.Group>
             {loading && <Loading size={50} />}
             <Button type="submit" variant="primary">
-              Create Note
+              Create Your Content
             </Button>
             <Button className="mx-2" onClick={resetHandler} variant="danger">
               Reset Feilds
@@ -174,6 +179,7 @@ function CreateNote() {
         </Card.Body>
 
         <Card.Footer className="text-muted">
+          Creating by - {createdBy}  <br/>
           Creating on - {new Date().toLocaleDateString()}
         </Card.Footer>
       </Card>

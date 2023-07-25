@@ -6,24 +6,33 @@
    background-image: url('./images/background2.jpg');
    background-size: cover;
 }
-.list{
-  display :flex;
-  flex-direction: column; 
+.sidenav{
+  height: 100vh;
+  background-color: green;
+  position: relative;
+  bottom: 0;
+  right: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
 }
-.list li{
-  display: flex;
-  margin-left: 5px;
-  padding-bottom: 10px;
-  font-size: 15px;
-  color: azure;
+
+.list a{
+  display: block;
+  padding: 6px 8px 6px 16px;
+  font-size: 16px;
+  color: #818181;
 }
-.list li:hover{
+.list a:hover{
   text-decoration: underline;
-  text-decoration-color: black;
+  color: #f1f1f1;
   
 }
+.marquee{
+  color:orangered;
+  font-size: 20px;
+}
 @media screen and (max-width: 600px) {
-  .list li{
+  .list a{
     font-size: 10px;
   }
 }

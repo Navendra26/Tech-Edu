@@ -17,18 +17,6 @@ const FrontpageContent = () => {
     dispatch(list10sortedNotes());
   }, [dispatch]);
   
-
-/*   const newNote = [...notes];
- const randomfunc =() => {
-   const newElem = [];
-   for(let i=0; i<10; i++){
-     let randele = notes.title[Math.floor(Math.random()*notes.length)];
-       newElem.push(randele);
-     }
-   console.log(newElem);
- }
- randomfunc(); */
-
   return (
     <div>
       <Stack
@@ -45,7 +33,7 @@ const FrontpageContent = () => {
             {note.title}
             </Link>
             <div className="new-anime">
-              latest
+              NEW
             </div>
           </div>
         ))}

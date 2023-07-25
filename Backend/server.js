@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const userRoutes = require("./routes/userRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 const { notFound, errorHandler } = require('./MiddleWares/errorMiddleware');
+const path = require('path');
 
 const app = express();
 dotenv.config(); // .env file contains all of our secrets info related to our application, 
@@ -22,8 +23,8 @@ app.use(express.json()); // use every time when we have to accept data from the 
 
 /* app.get('/', (req,res)=> {   //get request get info from server(backend) and serve it to front end
   res.send("API is running...");
-});
- */
+}); */
+
 /* 
 //fetch all from notes file
 app.get('/api/notes', (req, res) => {
@@ -38,9 +39,26 @@ app.get('/api/notes/:id', (req, res) => { //This will fetch the perticular id dy
   // console.log(req.params); // in console --> id:value
 }); */
 
-
 app.use("/api/users", userRoutes);   //all of the files related to the users will go to userRoutes file created within routes folder
 app.use("/api/notes",noteRoutes);
+
+// -----------------------------Deployment -------------------------------------------
+   
+    __dirname = path.resolve();
+    if(process.env.NODE_ENV === 'production') {     /* if project is not ready for deployment then its value should be 'developement' */
+       app.use(express.static(path.join(__dirname, '/frontend/build')));       // use static folder called build from frontend
+
+       app.get('*', (req, res) =>{    // this will check all routes other than our routes(noteRoutes and userRoutes)    ->and whenever we run our backend it going to serve our frontend to the localhost 5000 
+        
+        res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));   // send response from current folder(__dirname) to frontend then build and index.html of build folder
+       })  
+  }
+   else{
+    app.get('/', (req,res)=> {  
+      res.send("API is running...");
+    });
+  }
+// -----------------------------Deployment -------------------------------------------
 
 app.use(notFound);  //using from errorMiddleWare file
 app.use(errorHandler); 

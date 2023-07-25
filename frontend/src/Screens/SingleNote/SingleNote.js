@@ -15,7 +15,9 @@ function SingleNote({match}) {       // @deprecated: match come from react route
   const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
   const [date, setDate] = useState("");
-  const [pics, setPics] = useState("");
+  const [pics, setPics] = useState();
+  const [vid, setVid]  = useState();
+  const [caption, setCaption] = useState();
  
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -44,6 +46,8 @@ function SingleNote({match}) {       // @deprecated: match come from react route
       setAuthor(data.author);
       setDate(data.updatedAt);
       setPics(data.pictures);
+      setVid(data.ytVideos);
+      setCaption(data.videoCaption);
     };
 
     fetching();
@@ -54,42 +58,46 @@ function SingleNote({match}) {       // @deprecated: match come from react route
     setCategory("");
     setContent("");
     setAuthor("");
-   
+    
   };
 
-  const updateHandler = (e) => {
+  const updateHandler =  (e) => {
     e.preventDefault();
-    dispatch(updateNoteAction(id, title, content, category, author, pics));
+    dispatch(updateNoteAction(id, title, content, category, author, pics, vid, caption));
     if (!title || !content || !category || !author) return;
 
     resetHandler();
-    navigate("/mynotes");
+    navigate('/mynotes');
   };
 
-// cloudnary allow us to upload images (this is the logic to upload an image over here to the cloudinary)
-const postDetails = (pic) => {
-   if(!pic) return;
-  console.log(pic.target);
-  if(pic.type === 'image/jpeg' || pic.type === 'image/png'){  
-   // this is generic code while uploading photos and files with cloudinary or with anything
-   const data = new FormData();      // whenever we want to uplode new file we create new FormData <-- basic html
-   data.append('file', pic);   // add a new field for pics
-   data.append('upload_preset', 'notezipper');  // add upload_preset
-   data.append('cloud_name', 'mysuperclouds');   // my clouds name in mysuperclouds(or anything)
-   fetch("https://api.cloudinary.com/v1_1/mysuperclouds/image/upload", {
-     method:"post",
-     body: data,
-   })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-      setPics(data.url.toString());
-    })
-    .catch((err) => {
-      console.log(err);
+  const postDetails = (pic) => {
+
+    if(!pic) {
+    return 
+    }
+     // this is generic code while uploading photos and files with cloudinary or with anything
+    const imageArray = Array.from(pic);
+    const urlArray=[];
+    imageArray.forEach((image) => {
+    const data = new FormData();      // whenever we want to uplode new file we create new FormData <-- basic html
+     data.append('file', image);
+      data.append('upload_preset', 'notezipper');  
+      data.append('cloud_name', 'mysuperclouds');  
+      fetch("https://api.cloudinary.com/v1_1/mysuperclouds/image/upload", {
+        method:"post",
+        body: data,
+      })
+       .then((res) => res.json())
+       .then((data) => {
+         const url = data.url.toString();
+        urlArray.push(url); 
+       })
+       .catch((err) => {
+         console.log(err);
+       });
     });
-  } 
-};
+    setPics([...pics, urlArray]);
+   }
 
   return (
     <MainScreen title="Edit Content">
@@ -152,7 +160,7 @@ const postDetails = (pic) => {
             </Form.Group>
             <Form.Group >
            <Form.Label>Upload related Pictures(if necessory)</Form.Label>
-            <Form.Control
+            <Form.Control multiple
               onChange={(e) => postDetails(e.target.files)}  // files[0] means if selected more than one image only first img will going to select 
               id="custom-file"
               type="file"
@@ -160,16 +168,36 @@ const postDetails = (pic) => {
               custom="true"
             />
           </Form.Group>
+          <Form.Group controlId="vid">
+              <Form.Label>YouTube Video links (if any)</Form.Label>
+              <Form.Control multiple
+                type="vid"
+                name="Arrays[]"
+               value={vid}
+                placeholder="Put your redirect link here"
+                onChange={(e) => setVid(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group controlId="caption">
+              <Form.Label>Caption to for your youtube video link</Form.Label>
+              <Form.Control multiple
+                type="caption"
+                name="Arrays[]"
+                value={caption}
+                placeholder="Enter the Captions for video link"
+                onChange={(e) => setCaption( e.target.value)}
+              />
+            </Form.Group>
             {loading && <Loading size={50} />}
             <Button variant="primary" type="submit">
-              Update Note
+              Update Your Content
             </Button>
             <Button
               className="mx-2"
               variant="danger"
               onClick={() => deleteHandler(id)}
             >
-              Delete Note
+              Delete Content
             </Button>
           </Form>
         </Card.Body>

@@ -32,6 +32,9 @@
        ytVideos :{
         type: Array,
        },
+       createdBy:{
+         type: String,
+       },
        user: {
          type: mongoose.Schema.Types.ObjectId,
          required: true,

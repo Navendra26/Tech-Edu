@@ -1,14 +1,13 @@
+*{
+  box-sizing: border-box;
+}
 .stack{
-  width: auto;
-  height: 64vh;
-  overflow: scroll;
-  margin: auto ;
- 
+  height: 100%;
 }
 .notes{
   color: yellow;
   font-weight: bold;
-  font-size: 30px;
+  font-size: 22px;
   border: 1px solid white;
   cursor: pointer;
   margin: 5px;
@@ -16,10 +15,15 @@
   background-color: rgba(101, 31, 215, 0.4);
 
 }
+.notes:hover{
+  box-shadow: 0.6px 0.5px 10px 1px;
+  transition: .3s ease;
+}
 
 @media screen and (max-width:768px) {
-   .notes{
-     font-size: 20px;
+  .notes{
+    font-size: 20px;
+    
    }
    .stack{
      width: auto;
@@ -35,10 +39,8 @@
   }
 }
 .new-anime{
-  border: 1px solid;
+  
 margin-left: 50px;
-  padding: 0 10px;
-  background-color: white;
-  border-radius: 12px;
+  font-size: 13px;
   animation: anime 1.2s ease infinite;
 }

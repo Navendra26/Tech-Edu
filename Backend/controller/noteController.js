@@ -8,8 +8,7 @@ const getNotes = asyncHandler(async (req, res) => {
 });
 
 const get10SortedNotes = asyncHandler(async (req, res) => {
-   await Content.find(/* {user: req.user._id} */)  // we have to access notes for particular user. For this we need to provide userId as parameter in find() query of mongoDB from middleware
-  //  ( as we dont want to do by user manually) so we have to create middleware to achieve that
+   await Content.find() 
   .sort({createdAt:-1}) //sort by createdAt field in descending order
   .limit(10) // limit the result to 10 entries
   .then(note => res.json(note))
@@ -17,14 +16,14 @@ const get10SortedNotes = asyncHandler(async (req, res) => {
 });
 
 const createNote = asyncHandler(async (req, res,) => {
-   const {title, content, category, author, pictures, ytVideos, videoCaption} = req.body;
+   const {title, content, category, author, pictures, ytVideos, videoCaption, createdBy} = req.body;
 
    if(!title || !content || !category || !author ) {
      res.status(400);
      throw new Error("Please Fill all required Fields");
    }
    else{
-     const note = new Content({user:req.user._id, title, content, category, author, pictures, videoCaption, ytVideos});
+     const note = new Content({user:req.user._id, title, content, category, author, pictures, videoCaption, ytVideos, createdBy});
 
      const createdContent = await note.save();  // saving into our database
      

@@ -295,6 +295,7 @@
  progress {
    vertical-align: baseline;
  }
+
  [type="number"]::-webkit-inner-spin-button,
  [type="number"]::-webkit-outer-spin-button {
    height: auto;
@@ -2409,6 +2410,7 @@
      transition: none;
    }
  }
+
  .btn:hover {
    color: #222;
    text-decoration: none;
@@ -9486,6 +9488,9 @@ a.text-dark:hover {
     color: inherit;
     border-color: #dee2e6;
   }
+}
+.acc-items:hover{
+  box-shadow: 1px 1px 3px 1px gray;
 }
 .navbar {
   border-style: solid;

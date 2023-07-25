@@ -8,7 +8,7 @@ import { deleteNoteAction, listNotes } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 
-const MyNotes = ({search}) => {
+const AllContents = ({search}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,9 +26,7 @@ const MyNotes = ({search}) => {
 
   const noteDelete = useSelector((state) => state.noteDelete); // this is used bcoz sometimes it not display when we create a new note  so it will help to display
   const {
-    loading: loadingDelete,
     error: errorDelete,
-    success: successDelete,
   } = noteDelete;
 
   const deleteNoteHandler = (id) => {
@@ -62,13 +60,14 @@ const MyNotes = ({search}) => {
    /*  if (!userInfo ) {
       navigate("/");
     } */
+    
   }, [dispatch, noteCreate, noteUpdate, noteDelete, navigate, userInfo]); // whenever any of this are changes the useEffect rerender the page
 
 
   return (
     <Mainscreen title= {userInfo ?`Welcome Back To our All Contents ${userInfo.name}..`: "WelCome to Our Tech-Ed "}>
       <Link to={userInfo ? "createnote" : "/login"}>
-        {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after mynotes/ */}
+        {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after AllContents/ */}
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Contents
         </Button>
@@ -88,9 +87,9 @@ const MyNotes = ({search}) => {
           (
             note // '?' sign is for optional if we have notes(here) then render and also render even if we dont have any data in notes
           ) => (
-            <Accordion key={note._id}>
-              <Accordion.Item eventKey="0">
-                <Card style={{ margin: 10 }}>
+            <Accordion key={note._id} >
+              <Accordion.Item eventKey="0" >
+                <Card className="acc-items" style={{ margin: 10,}}>
                   <Card.Header style={{ display: "flex" }}>
                     <span
                       style={{
@@ -100,6 +99,7 @@ const MyNotes = ({search}) => {
                         cursor: "pointer",
                         alignSelf: "center",
                         fontSize: 18,
+                    
                       }}
                     >
                       <Accordion.Button as={Card.Text} variant="link">
@@ -123,37 +123,44 @@ const MyNotes = ({search}) => {
                         <Badge bg="success">Catagory - {note.category}</Badge>
                       </h4>
                       <blockquote className="blockquote mb-0">
-                        <div
-                         style={{
-                          display: "flex",
-                          alignItem: "center",
-                          justifyContent: "space-between",
-                        }}>
-                        <p>{note.content}</p>
-                         <img src={note.pictures[0]}   />
-                         <img src={note.pictures[1]}   />
-                         <img src={note.pictures[2]}   />
+                        <div>
+                        
+                         {note.pictures.map((foto) => (
+                           <img className="img-fluid" style={{
+                             float:"right",
+                             clear:"left",
+                             marginLeft:"10px",
+                            marginBottom: "5px",
+                            border: "2px solid black",
+                            padding: "2px",
+                            borderRadius: "12px",
+                            }} width={300} height={300} src={foto} />
+                            ))}
+                            <p>{note.content}</p>
                          </div>
-                       { (note.ytVideos.length === 0) ? "" : ( <div style={{
-                           boxSizing: "border-box",
-                           border: "1px solid",
-                           textAlign: "center",
-                           padding: "4px",
+                       { (note.ytVideos.length === 0) ? null : ( <div style={{
+                           boxShadow:"1px 1px 2px 1px gray ",
+                           padding: "5px",
+                           display: "inline-block",
                          }}>
-                           <h4>{note.videoCaption}:</h4>
+                           <p>{note.videoCaption}:
                            <a 
                            style={{
                              color: "blue",
                              textDecoration: "underline",
-                           }} href={note.ytVideos}>{note.ytVideos}</a>
+                           }} href={note.ytVideos}>click here</a>
+                           </p>
                          </div>) }
+                        
                         <footer className="blockquote-footer">
+                          Author: {note.author}  <br/>
                           Created on{" "}
                           <cite title="Source Title">
                             {note.createdAt.substring(0, 10)}
-                            {"  by "+ note.author}
+                            {"  by "+ note.createdBy}
                           </cite>
-                        </footer>
+                        </footer> 
+                                          
                       </blockquote>
                     </Card.Body>
                   </Accordion.Collapse>
@@ -166,4 +173,4 @@ const MyNotes = ({search}) => {
   );
 };
 
-export default MyNotes;
+export default AllContents;
