@@ -2,22 +2,29 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
-  background-image: url("../../background1.jpg");
+  background-image: url("../FrontPage/images/photo2.jpeg");
   background-position: center;
   background-size: cover;
+  
 }
 .intro-text{
   width: 100%;
   text-align: center;
-
+  box-shadow: 4px 9px 20px 10px rgba(0, 0, 0, 0.6);
 }
 .title{
   font-size: 85px;
+  font-weight: 500;
+ 
 }
 
 .subtitle{
   font-size: 25px;
   padding-top: 10px;
+  margin:3px;
+  background-color: goldenrod;
+  opacity: .7;
+  
 }
 .buttonContainer{
   margin-top: 50px;

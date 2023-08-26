@@ -10,7 +10,7 @@ const LandingPage = () => {
      const userInfo = localStorage.getItem("userInfo");
 
      if(userInfo){
-       navigate("/mynotes");
+       navigate(-1);
      }
    },[navigate]);
 
@@ -20,8 +20,8 @@ const LandingPage = () => {
         <Row>
           <div className="intro-text">
             <div className="div">
-              <h1 className="title">Welcome to Our Technical World</h1>
-              <p className="subtitle">One of the best place for your Technical education</p>
+              <h1 className="title">Welcome to The Technical World</h1>
+              <p className="subtitle">One of the best place for your Technical Up-Skilling</p>
             </div>
             <div className="buttonContainer">
               <a href="/login">
@@ -33,7 +33,7 @@ const LandingPage = () => {
                 <Button
                   size="lg"
                   className="landingbutton"
-                  variant="outline-primary"
+                  variant="primary"
                 >
                   Signup
                 </Button>

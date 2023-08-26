@@ -2,28 +2,23 @@
 
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { createNoteAction } from "../../actions/notesAction";
-import Loading from "../../components/Loading";
-import ReactMarkdown from "react-markdown";
 import Mainscreen from "../../components/Mainscreen";
 import ErrorMessage from "../../components/Errormessage";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { createNoteAction } from "../../actions/notesAction";
+import Loading from "../../components/Loading";
 
 function CreateNote() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
-  const [files, setfiles] = useState([]);
-  const [videoCaption, setVideoCap] = useState([]);
-  const [ ytVideos, setytVideos] = useState([]);
+  const [elements, setElements] = useState([]);
 
   const dispatch = useDispatch();
-  
   const navigate = useNavigate();
 
-  const noteCreate = useSelector((state) => state.noteCreate);  // taking state from noteReducer
+  const noteCreate = useSelector((state) => state.noteCreate); // taking state from noteReducer
   const { loading, error } = noteCreate;
 
   const userLogin = useSelector((state) => state.userLogin); //using this state becoz we want to go on login screen page whenever user logout
@@ -32,56 +27,98 @@ function CreateNote() {
   const resetHandler = () => {
     setTitle("");
     setCategory("");
-    setContent("");
     setAuthor("");
-    setfiles([]);
-    setVideoCap([]);
-    setytVideos([]);
+    setElements([]);
   };
- 
-  const createdBy = userInfo.name;
+  useEffect(() => {}, []);
+  const createdBy = userInfo.name; // Replace with user info
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createNoteAction(title, content, category, author, files, videoCaption, ytVideos, createdBy));
-    if (!title || !content || !category || !author) return;
- 
+    /*  const content = elements.map((element) => {
+      return { type: element.type, value: element.value, caption: element.caption };
+    }); */
+
+    // Dispatch and other submission logic here
+    dispatch(createNoteAction(title, category, author, elements, createdBy));
+    if (!title || elements.length === 0 || !category || !author) return;
+
+    console.log(elements);
     resetHandler();
     navigate(-1);
   };
-  
-  useEffect(() => {}, []);
 
-  // cloudnary allow us to upload images (this is the logic to upload an image over here to the cloudinary)
- const postDetails = (pics) => {
+  const addElement = (elementType) => {
+    setElements([
+      ...elements,
+      { id: Date.now(), type: elementType, value: "", caption: "" },
+    ]);
+  };
 
-   if(!pics) {
-   return setfiles(null)
-   }
-    // this is generic code while uploading photos and files with cloudinary or with anything
-   const imageArray = Array.from(pics);
-   const urlArray=[];
-   imageArray.forEach((image) => {
-   const data = new FormData();      // whenever we want to uplode new file we create new FormData <-- basic html
-    data.append('file', image);
-     data.append('upload_preset', 'notezipper');  
-     data.append('cloud_name', 'mysuperclouds');  
-     fetch("https://api.cloudinary.com/v1_1/mysuperclouds/image/upload", {
-       method:"post",
-       body: data,
-     })
-      .then((res) => res.json())
-      .then((data) => {
-        const url = data.url.toString();
-       urlArray.push(url); 
-      })
-      .catch((err) => {
-        console.log(err);
+  const deleteElement = (elementId) => {
+    const updatedElements = elements.filter(
+      (element) => element.id !== elementId
+    );
+    setElements(updatedElements);
+  };
+
+  const updateElementImageValue = async (elementId, file) => {
+    if (!file) {
+      return;
+    }
+
+    try {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "notezipper");
+      data.append("cloud_name", "mysuperclouds");
+
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/mysuperclouds/image/upload",
+        {
+          method: "post",
+          body: data,
+        }
+      );
+
+      const responseData = await response.json();
+      const imageUrl = responseData.url.toString();
+
+      // Here, you need to update the state for the specific image element
+      // You can do this by mapping through the elements and finding the element with the specific id
+      const updatedElements = elements.map((element) => {
+        if (element.id === elementId) {
+          return { ...element, value: imageUrl };
+        }
+        return element;
       });
-   });
-   setfiles(urlArray);
-  }
- 
+
+      setElements(updatedElements);
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+
+  const updateElementValue = (elementId, value) => {
+    const updatedElements = elements.map((element) => {
+      if (element.id === elementId) {
+        return { ...element, value };
+      }
+      return element;
+    });
+    setElements(updatedElements);
+  };
+
+  const updateElementCaption = (elementId, caption) => {
+    const updatedElements = elements.map((element) => {
+      if (element.id === elementId) {
+        return { ...element, caption };
+      }
+      return element;
+    });
+    setElements(updatedElements);
+  };
+
   return (
     <Mainscreen title="CREATE A CONTENT">
       <Card>
@@ -89,9 +126,11 @@ function CreateNote() {
         <Card.Body>
           <Form onSubmit={submitHandler}>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-            {loading && <Loading/>}
+            {loading && <Loading />}
             <Form.Group controlId="title">
-              <Form.Label>Title*</Form.Label>
+              <Form.Label>
+                Title<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 type="title"
                 value={title}
@@ -100,27 +139,21 @@ function CreateNote() {
               />
             </Form.Group>
 
-            <Form.Group controlId="content">
-              <Form.Label>Content*</Form.Label>
+            <Form.Group controlId="author">
+              <Form.Label>
+                Author Name<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
-                as="textarea"
-                value={content}
-                placeholder="Enter the content"
-                rows={4}
-                onChange={(e) => setContent(e.target.value)}
+                type="author"
+                value={author}
+                placeholder="Enter the Author Name"
+                onChange={(e) => setAuthor(e.target.value)}
               />
             </Form.Group>
-            {content && (
-              <Card>
-                <Card.Header>Content Preview</Card.Header>
-                <Card.Body>
-                  <ReactMarkdown>{content}</ReactMarkdown>
-                </Card.Body>
-              </Card>
-            )}
-
             <Form.Group controlId="category">
-              <Form.Label>Category*</Form.Label>
+              <Form.Label>
+                Category<span style={{ color: "red" }}>*</span>
+              </Form.Label>
               <Form.Control
                 type="category"
                 value={category}
@@ -129,57 +162,113 @@ function CreateNote() {
               />
             </Form.Group>
 
-            <Form.Group controlId="author">
-              <Form.Label>Author Name*</Form.Label>
-              <Form.Control
-                type="author"
-                value={author}
-                placeholder="Enter the Author Name"
-                onChange={(e) => setAuthor(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group >
-           <Form.Label>Upload related Pictures(if necessory)</Form.Label>
-            <Form.Control multiple
-              onChange={(e) => postDetails(e.target.files)}  // files[0] means if selected more than one image only first img will going to select 
-              id="custom-file"
-              type="file"
-              label="Upload related Picture"
-              custom="true"
-            />
-          </Form.Group>
-          <Form.Group controlId="ytVideos">
-              <Form.Label>YouTube Video links (if any)</Form.Label>
-              <Form.Control multiple
-                type="ytVideos"
-                name="Arrays[]"
-               value={ytVideos}
-                placeholder="Put your video link here"
-                onChange={(e) => setytVideos(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group controlId="videoCaption">
-              <Form.Label>Caption to for your youtube video link</Form.Label>
-              <Form.Control multiple
-                type="videoCaption"
-                name="Arrays[]"
-                value={videoCaption}
-                placeholder="video title"
-                onChange={(e) => setVideoCap(e.target.value)}
-              />
-            </Form.Group>
-            {loading && <Loading size={50} />}
+            {elements.map((element) => (
+              <React.Fragment key={element.id}>
+                {element.type === "paragraph" && (
+                  <Form.Group controlId={`content-${element.id}`}>
+                    <Form.Label>Paragraph</Form.Label>
+                    <Form.Control
+                      as="textarea"
+                      value={element.value}
+                      placeholder="Enter the content"
+                      rows={4}
+                      onChange={(e) =>
+                        updateElementValue(element.id, e.target.value)
+                      }
+                    />
+                  </Form.Group>
+                )}
+                {element.type === "image" && (
+                  <Form.Group controlId={`image-${element.id}`}>
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) =>
+                        updateElementImageValue(element.id, e.target.files[0])
+                      }
+                      custom="true"
+                    />
+                    <Form.Label>Image Caption</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={element.caption}
+                      placeholder="Enter the image caption"
+                      onChange={(e) =>
+                        updateElementCaption(element.id, e.target.value)
+                      }
+                    />
+                  </Form.Group>
+                )}
+                {element.type === "video" && (
+                  <Form.Group controlId={`video-${element.id}`}>
+                    <Form.Label>YouTube Video URL</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={element.value}
+                      placeholder="Enter the YouTube video URL"
+                      onChange={(e) =>
+                        updateElementValue(element.id, e.target.value)
+                      }
+                    />
+                    <Form.Label>Video Caption</Form.Label>
+                    <Form.Control
+                      type="text"
+                      value={element.caption}
+                      placeholder="Enter the video caption"
+                      onChange={(e) =>
+                        updateElementCaption(element.id, e.target.value)
+                      }
+                    />
+                  </Form.Group>
+                )}
+                <button
+                  type="button"
+                  className="bg-danger"
+                  onClick={() => deleteElement(element.id)}
+                >
+                  <i className="fa fa-multiply"></i> CUT
+                </button>
+              </React.Fragment>
+            ))}
+            <br />
+            <br />
+            {/*  USING REACTMARKDOWN FOR CONTENT PREVIEW ------
+            {(elements.length !== 0 ) && (
+              <Card>
+                <Card.Header>Content Preview</Card.Header>
+                <Card.Body>
+                  <ReactMarkdown>{elements}</ReactMarkdown>
+                </Card.Body>
+              </Card>
+            )} */}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <button type="button" onClick={() => addElement("paragraph")}>
+                <i className="fa fa-plus"></i>paragraph
+              </button>
+              <button type="button" onClick={() => addElement("image")}>
+                <i className="fa fa-plus"></i>image
+              </button>
+              <button type="button" onClick={() => addElement("video")}>
+                <i className="fa fa-link"></i> Add YouTube Video
+              </button>
+            </div>
+
             <Button type="submit" variant="primary">
               Create Your Content
             </Button>
             <Button className="mx-2" onClick={resetHandler} variant="danger">
-              Reset Feilds
+              Reset Fields
             </Button>
           </Form>
         </Card.Body>
-
         <Card.Footer className="text-muted">
-          Creating by - {createdBy}  <br/>
+          Creating by - {createdBy} <br />
           Creating on - {new Date().toLocaleDateString()}
         </Card.Footer>
       </Card>

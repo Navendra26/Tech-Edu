@@ -12,18 +12,18 @@ const get10SortedNotes = asyncHandler(async (req, res) => {
   .sort({createdAt:-1}) //sort by createdAt field in descending order
   .limit(10) // limit the result to 10 entries
   .then(note => res.json(note))
-  .catch(error => res.status(404).json({noteNotfound : 'No notes found'}));
+  .catch(error => res.status(404).json({noteNotfound : 'No content found'}));
 });
 
 const createNote = asyncHandler(async (req, res,) => {
-   const {title, content, category, author, pictures, ytVideos, videoCaption, createdBy} = req.body;
+   const {title, category, author, elements, createdBy} = req.body;
 
-   if(!title || !content || !category || !author ) {
+   if(!title || elements.length ===0 || !category || !author ) {
      res.status(400);
      throw new Error("Please Fill all required Fields");
    }
    else{
-     const note = new Content({user:req.user._id, title, content, category, author, pictures, videoCaption, ytVideos, createdBy});
+     const note = new Content({user:req.user._id, title, category, author, elements, createdBy});
 
      const createdContent = await note.save();  // saving into our database
      
@@ -45,7 +45,7 @@ const getNoteById = asyncHandler(async (req, res ) => {
 });
 
 const UpdateNote = asyncHandler(async (req, res) => {
-  const {title, content, category, author, pictures, videoCaption, ytVideos} = req.body;   // destructuring object from body
+  const {title, category, author, elements} = req.body;   // destructuring object from body
 
   const note = await Content.findById(req.params.id); //find the perticular id of note that has to be update
 
@@ -56,12 +56,9 @@ const UpdateNote = asyncHandler(async (req, res) => {
 
   if(note) {  // checking that  if this  id of note is present or not  /that's why we didnt use if else or else stmt
     note.title = title;
-    note.content = content;
     note.category = category;
     note.author = author;
-    note.pictures = pictures;
-    note.videoCaption = videoCaption;
-    note.ytVideos = ytVideos;
+    note.elements = elements;
 
     const updatedNote = await note.save(); // save back to DB
     res.json(updatedNote);

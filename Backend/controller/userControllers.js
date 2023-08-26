@@ -1,10 +1,9 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../Models/userModel");
-const { use } = require("../routes/userRoutes");
 const generateToken = require("../Utils/generateToken");
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password, pic } = req.body;
+  const { name, email, password, isAdmin, pic } = req.body;
 
 // To check whether the user is already exists in our database
 const userExists = await User.findOne({email}); //findOne() is one of the queries of mongoDB/mongoose
@@ -19,6 +18,7 @@ const user = await User.create({
    name,
    email,
    password,
+   isAdmin,
    pic,
 });
 

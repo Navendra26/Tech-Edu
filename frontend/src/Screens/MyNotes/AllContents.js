@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Accordion, Badge, Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Accordion, Button, Card } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Mainscreen from "../../components/Mainscreen";
 // import axios from "axios";   it had been imported bcz we were fetching notes diretly from the server's api
@@ -9,6 +9,7 @@ import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 
 const AllContents = ({search}) => {
+  const [admin, setAdmin] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -38,24 +39,10 @@ const AllContents = ({search}) => {
   else {
     alert("For this action you need to login :(");
   }};
-  /* 
-   const [note, setNote] = useState([]);   //this was written bcz we were fetching notes directly from the api 
-                                              //(now we gonna getting notes from our database by using Redux) 
-
- 
-         // for fetching dara from api(s) we need to install axios.
-        // OR we can also fetch api by using fetch keyword instead of installing axios.
-
- // connecting backend to the frontend by using fetch or axios(here)
- const fetchNotes = async () => {
-   const {data }= await axios.get("/api/notes");  //path will be this becoz our every request will go port 5000 thru port 3000
-
-   setNotes(data);
- } */
 
   useEffect(() => {
     // fetchNotes();
-
+    userInfo && setAdmin(userInfo.isAdmin);
     dispatch(listNotes()); // redirecting to listNotes() defined within notesAction.js
    /*  if (!userInfo ) {
       navigate("/");
@@ -66,12 +53,14 @@ const AllContents = ({search}) => {
 
   return (
     <Mainscreen title= {userInfo ?`Welcome Back To our All Contents ${userInfo.name}..`: "WelCome to Our Tech-Ed "}>
-      <Link to={userInfo ? "createnote" : "/login"}>
+     {admin &&
+      <Link to={"createcontent"}>
         {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after AllContents/ */}
         <Button style={{ marginLeft: 10, marginBottom: 6 }} size="lg">
           Create New Contents
         </Button>
       </Link>
+     }
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
       )}
@@ -87,9 +76,9 @@ const AllContents = ({search}) => {
           (
             note // '?' sign is for optional if we have notes(here) then render and also render even if we dont have any data in notes
           ) => (
-            <Accordion key={note._id} >
-              <Accordion.Item eventKey="0" >
-                <Card className="acc-items" style={{ margin: 10,}}>
+            <div key={note._id} >
+              <div eventKey="0" >
+                <div className="acc-items" style={{ margin: 10,}}>
                   <Card.Header style={{ display: "flex" }}>
                     <span
                       style={{
@@ -102,12 +91,15 @@ const AllContents = ({search}) => {
                     
                       }}
                     >
-                      <Accordion.Button as={Card.Text} variant="link">
-                        {note.title}
-                      </Accordion.Button>
+                       <a href={`/content/${note._id}/${note.categoty}/${note.title}`}> 
+                      <div as={Card.Text} variant="link">
+                      {note.title}
+                      </div>
+                      </a>
                     </span>
+                    {admin && 
                     <div>
-                      <Button href={userInfo ? `/note/${note._id}` :  "/login"}>Edit</Button>
+                      <Button href={ `/content/${note._id}`}>Edit</Button>
                       <Button
                         variant="danger"
                         className="mx-2"
@@ -116,57 +108,12 @@ const AllContents = ({search}) => {
                         Delete
                       </Button>
                     </div>
+                    }
                   </Card.Header>
-                  <Accordion.Collapse eventKey="0">
-                    <Card.Body>
-                      <h4>
-                        <Badge bg="success">Catagory - {note.category}</Badge>
-                      </h4>
-                      <blockquote className="blockquote mb-0">
-                        <div>
-                        
-                         {note.pictures.map((foto) => (
-                           <img className="img-fluid" style={{
-                             float:"right",
-                             clear:"left",
-                             marginLeft:"10px",
-                            marginBottom: "5px",
-                            border: "2px solid black",
-                            padding: "2px",
-                            borderRadius: "12px",
-                            }} width={300} height={300} src={foto} />
-                            ))}
-                            <p>{note.content}</p>
-                         </div>
-                       { (note.ytVideos.length === 0) ? null : ( <div style={{
-                           boxShadow:"1px 1px 2px 1px gray ",
-                           padding: "5px",
-                           display: "inline-block",
-                         }}>
-                           <p>{note.videoCaption}:
-                           <a 
-                           style={{
-                             color: "blue",
-                             textDecoration: "underline",
-                           }} href={note.ytVideos}>click here</a>
-                           </p>
-                         </div>) }
-                        
-                        <footer className="blockquote-footer">
-                          Author: {note.author}  <br/>
-                          Created on{" "}
-                          <cite title="Source Title">
-                            {note.createdAt.substring(0, 10)}
-                            {"  by "+ note.createdBy}
-                          </cite>
-                        </footer> 
-                                          
-                      </blockquote>
-                    </Card.Body>
-                  </Accordion.Collapse>
-                </Card>
-              </Accordion.Item>
-            </Accordion>
+                 
+                </div>
+              </div>
+            </div>
           )
         )}
     </Mainscreen>

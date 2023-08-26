@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Container,
   Form,
   FormControl,
   Nav,
@@ -28,33 +27,30 @@ const Header = ({ setSearch }) => {
 
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
-      <Container>
         <Navbar.Brand>
-          {" "}
-          {/*  we can use  either href or Link tag for routing. but Link would be preffered to use from react-router-dom  */}
-          <Link to="/">Technical Education</Link>
+         
+          <Link to="/">TECH-ED</Link>
         </Navbar.Brand>
         <Nav>
           <Nav.Link>
-            <Link to="/action1.1">Technical Skill</Link>
+            <Link to="/contents/technical skill">Technical Skill</Link>
           </Nav.Link>
           <Nav.Link >
-            <Link to="/action1.2">Effective Communication</Link>
+            <Link to="/contents/effective communication">Effective Communication</Link>
           </Nav.Link>
           <Nav.Link >
-            <Link to="/action1.3">Motivational</Link>
+            <Link to="/contents/motivational">Motivational</Link>
           </Nav.Link>
           <NavDropdown title="LeaderShip Quality" id="basic-nav-dropdown">
-            {" "}
-            {/* we can make it optional chaining by '?' there */}
+           
             <NavDropdown.Item>
-              <Link to="/action2.0">bussiness Leader</Link>
+              <Link to="/contents/leadership/bussiness leader">bussiness Leader</Link>
             </NavDropdown.Item>
             <NavDropdown.Item>
-              <Link to="/action2.1">Group Leader</Link>
+              <Link to="/contents/leadership/group leader">Group Leader</Link>
             </NavDropdown.Item>
             <NavDropdown.Item>
-              <Link to="/action2.3"></Link>
+              <Link to="/contents/leadership/manager">Manager</Link>
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
@@ -76,7 +72,7 @@ const Header = ({ setSearch }) => {
             {userInfo ? (
                <Nav>
                <Nav.Link>
-                 <Link to="/mynotes">All Contentes</Link>
+                 <Link to="/contents">All Contentes</Link>
                </Nav.Link>
              
               <NavDropdown title={userInfo?.name} id="basic-nav-dropdown">
@@ -98,13 +94,12 @@ const Header = ({ setSearch }) => {
             ) : (
               <Nav>
                 <Nav.Link>
-                  <Link to="/mainpage">Login/signUp</Link>
+                  <Link to="/auth">Login/signUp</Link>
                 </Nav.Link>
               </Nav>
             )}
           </Nav>
         </Navbar.Collapse>
-      </Container>
     </Navbar>
   );
 };

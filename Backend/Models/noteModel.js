@@ -2,8 +2,8 @@
    { like note is going to have title, content, catagory, user} 
    this note data is going to store here
    */
-   const mongoose = require('mongoose');
-   const bcrypt = require('bcryptjs');
+   const { ObjectId } = require('mongodb');
+const mongoose = require('mongoose');
    
    const contentSchema = mongoose.Schema(
      {
@@ -15,22 +15,12 @@
          type: String,
          required: true,
        },
-       content: {
-         type: String,
-         required: true,
-       },
        author:{
          type: String,
          required: true,
        },
-       pictures: {
-        type: Array,
-       },
-       videoCaption:{
-         type:Array,
-       },
-       ytVideos :{
-        type: Array,
+       elements:{
+         type: mongoose.Schema.Types.Mixed,
        },
        createdBy:{
          type: String,

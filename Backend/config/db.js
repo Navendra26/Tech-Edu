@@ -1,4 +1,4 @@
-/* 1 First of all select create ne project and build a cluster on mongoDB and choose plan(free)
+/* 1 First of all select create new project and build a cluster on mongoDB and choose plan(free)
  2 set database access by creating userName & password and click on add user then 
  3 network access by setting ip address to allow access from anywhere (0.0.0.0/0)
  4 install mongoose on your project to use mongoDB

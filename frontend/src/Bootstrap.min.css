@@ -217,7 +217,9 @@
    margin-bottom: 0.5rem;
  }
  button {
-   border-radius: 0;
+   border-radius: 14px;
+   color: #fff;
+   background-color: #ce6000;
  }
  button:focus {
    outline: 1px dotted;
@@ -9858,3 +9860,4 @@ a.list-group-item-danger.active:hover {
 .toast .close:not(:disabled):not(.disabled):hover {
   color: #000;
 }
+

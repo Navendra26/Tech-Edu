@@ -8,8 +8,10 @@ const Footer = () => {
      >
      <Container>
        <Row>
-          <Col className='text-center py-3 text-white'>Copyright &copy; Technical Education
+          <Col className='text-center text-white'>
+          Copyright &copy; Technical Education
           <div className='socialIcons'> 
+          <p className='contactus'>Contact On</p> {"   "}
           <span className='icon'>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
          fill="currentColor" stroke='currentColor' role="img" height="1em" width="1em">

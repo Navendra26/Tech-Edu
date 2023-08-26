@@ -20,30 +20,40 @@ const RegisterScreen = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
- 
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [secretKey, setSecretKey] = useState("");
+
   const dispatch = useDispatch();
 
-  const userRegister = useSelector(state => state.userRegister);
-  const {loading,error,userInfo } = userRegister;
-  
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
 
-    if(userInfo){
-      navigate("/mynotes");
+    if (userInfo) {
+      navigate("/");
     }
-  },[navigate,userInfo]);
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
-
-    if (password !== confirmpassword) {
-      setMessage("Passwords Do not Match");
+    if (isAdmin && secretKey !== "Technical") {
+      e.preventDefault();
+      setMessage("Invalid Admin");
     } else {
-    dispatch(register(name,email,password,pic));
+      e.preventDefault();
+
+      if (password !== confirmpassword) {
+        setMessage("Passwords Do not Match");
+        
+      }
+      // (After using redux)
+      // dispatching all of these stuff from register() definded under userAction.js file
+      else {
+        dispatch(register(name, email, password, isAdmin, pic));
+        setMessage("Successfully Registered")
+      }
     }
-    // (After using redux)
-   // dispatching all of these stuff from register() definded under userAction.js file
     /* else {
       setMessage(null);
       // calling to api
@@ -57,14 +67,14 @@ const RegisterScreen = () => {
 
         setLoading(true); //before requesting data it should be true for loading of server
 
+        // fetching data by axios , calling api from server
         const { data } = await axios.post(
-          // fetching data by axios , calling api from server
           "/api/users",
           {
             name,
             email,
             password,
-           
+            pic
           },
           config
         );
@@ -81,36 +91,35 @@ const RegisterScreen = () => {
     } */
   };
 
-// cloudnary allow us to upload images (this is the logic to upload an image over here to the cloudinary)
- const postDetails = (pics) => {
+  // cloudnary allow us to upload images (this is the logic to upload an image over here to the cloudinary)
+  const postDetails = (pics) => {
+    if (!pics) {
+      return setPicMessage("Please Select an Image");
+    }
+    setPicMessage(null);
 
-  if(!pics){
-    return setPicMessage("Please Select an Image");
-  }
-   setPicMessage(null);
-   
-   if(pics.type === 'image/jpeg' || pics.type === 'image/png'){  
-    // this is generic code while uploading photos and files with cloudinary or with anything
-    const data = new FormData();      // whenever we want to uplode new file we create new FormData <-- basic html
-    data.append('file', pics);   // add a new field for pics
-    data.append('upload_preset', 'notezipper');  // add upload_preset
-    data.append('cloud_name', 'mysuperclouds');   // my clouds name in mysuperclouds(or anything)
-    fetch("https://api.cloudinary.com/v1_1/mysuperclouds/image/upload", {
-      method:"post",
-      body: data,
-    })
-     .then((res) => res.json())
-     .then((data) => {
-       console.log(data);
-       setPic(data.url.toString());
-     })
-     .catch((err) => {
-       console.log(err);
-     });
-   } else {
-     return setPicMessage("Please Select an Image");
-   }
- };
+    if (pics.type === "image/jpeg" || pics.type === "image/png") {
+      // this is generic code while uploading photos and files with cloudinary or with anything
+      const data = new FormData(); // whenever we want to uplode new file we create new FormData <-- basic html
+      data.append("file", pics); // add a new field for pics
+      data.append("upload_preset", "notezipper"); // add upload_preset
+      data.append("cloud_name", "mysuperclouds"); // my clouds name in mysuperclouds(or anything)
+      fetch("https://api.cloudinary.com/v1_1/mysuperclouds/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          setPic(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return setPicMessage("Please Select an Image");
+    }
+  };
 
   return (
     <Mainscreen title="REGISTER">
@@ -119,6 +128,32 @@ const RegisterScreen = () => {
         {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
+          <div>
+            Register As{" "}
+            <input
+              type="radio"
+              name="isAdmin"
+              onClick={( ) => setIsAdmin(false)}
+            />
+            User
+            <input
+              type="radio"
+              name="isAdmin"
+              onClick={() => setIsAdmin(true)}
+            />
+            Admin
+          </div>
+          {isAdmin ? (
+            <Form.Group controlId="secret key">
+              <Form.Label>Secret key</Form.Label>
+              <Form.Control
+                type="secretKey"
+                placeholder="Enter secret key"
+                onChange={(e) => setSecretKey(e.target.value)}
+              />
+            </Form.Group>
+          ) : null}
+
           <Form.Group controlId="name">
             <Form.Label>Name</Form.Label>
             <Form.Control
@@ -159,13 +194,13 @@ const RegisterScreen = () => {
             />
           </Form.Group>
 
-            {picMessage && (
+          {picMessage && (
             <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
           )}
-          <Form.Group >
-           <Form.Label>Profile Picture</Form.Label>
+          <Form.Group>
+            <Form.Label>Profile Picture</Form.Label>
             <Form.Control
-              onChange={(e) => postDetails(e.target.files[0])}  // files[0] means if selected more than one image only first img will going to select 
+              onChange={(e) => postDetails(e.target.files[0])} // files[0] means if selected more than one image only first img will going to select
               id="custom-file"
               type="file"
               label="Upload Profile Picture"

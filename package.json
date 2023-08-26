@@ -1,7 +1,7 @@
 {
-  "name": "navendraa",
+  "name": "technicalsite",
   "version": "1.0.0",
-  "description": "its an amazing packages",
+  "description": "tech-edu site is used for gaining technical skill and best knowledge of technical world",
   "main": "server.js",
   "scripts": {
     "start": "nodemon Backend/server.js",

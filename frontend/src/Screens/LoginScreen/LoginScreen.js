@@ -26,7 +26,7 @@ const LoginScreen = () => {
      const userInfo = localStorage.getItem("userInfo");
 
      if(userInfo){
-       navigate("/mynotes");
+       navigate(-1);
      }
    },[navigate,userInfo]);
 

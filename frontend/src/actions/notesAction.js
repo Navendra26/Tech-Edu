@@ -15,8 +15,8 @@ import {
 
 import axios from "axios";
 
+// nested arrow function is only possible by the redux thunk
 export const listNotes = () => async (dispatch, getState) => {
-  // nested arrow function is only possible by the redux thunk
   try {
     dispatch({
       type: NOTES_LIST_REQUEST,
@@ -88,8 +88,9 @@ export const list10sortedNotes = () => async (dispatch, getState) => {
   }
 };
 
-export const createNoteAction = // exported to createNote.js file
-  (title, content, category, author, pictures, videoCaption, ytVideos, createdBy) => async (dispatch, getState) => {
+// exported to createNote.js file
+export const createNoteAction = 
+  (title, category, author, elements, createdBy) => async (dispatch, getState) => {
     try {
       dispatch({
         type: NOTES_CREATE_REQUEST,
@@ -108,7 +109,7 @@ export const createNoteAction = // exported to createNote.js file
 
       const { data } = await axios.post(
         "/api/notes/create",
-        { title, content, category, author, pictures, videoCaption, ytVideos, createdBy },
+        { title, category, author, elements, createdBy },
         config
       );
 
@@ -128,9 +129,9 @@ export const createNoteAction = // exported to createNote.js file
     }
   };
 
-
+// exported to singleNote.js file
 export const updateNoteAction =
-  (id, title, content, category, author, pictures, ytVideos, videoCaption) => async (dispatch, getState) => {
+  (id, title, category, author, elements) => async (dispatch, getState) => {
     try {
       dispatch({
         type: NOTES_UPDATE_REQUEST,
@@ -149,7 +150,7 @@ export const updateNoteAction =
 
       const { data } = await axios.put(
         `/api/notes/${id}`,
-        { title, content, category, author, pictures, ytVideos, videoCaption },
+        { title, category, author, elements },
         config
       );
 
@@ -169,7 +170,7 @@ export const updateNoteAction =
     }
   };
 
-
+// exported to singleNote.js file
   export const deleteNoteAction =
   (id) => async (dispatch, getState) => {
     try {
