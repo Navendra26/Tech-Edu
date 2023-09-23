@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Badge, Button, Card } from "react-bootstrap";
+import { Accordion, Badge, Button, Card, Form, FormControl, Nav } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Mainscreen from "../../components/Mainscreen";
 // import axios from "axios";   it had been imported bcz we were fetching notes diretly from the server's api
@@ -8,7 +8,8 @@ import { deleteNoteAction, listNotes } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 
-const Catagorialcontent = ({search}) => {
+const Catagorialcontent = () => {
+  const [search, setSearch] = useState("");
   const [admin, setAdmin] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ const Catagorialcontent = ({search}) => {
  console.log(category);
 
   return (
-    <Mainscreen title=  {`WelCome to ${category}`}>
+    <Mainscreen title= {category}>
       {admin &&
       <Link to={"/contents/createcontent"}>
         {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after AllContents/ */}
@@ -65,6 +66,17 @@ const Catagorialcontent = ({search}) => {
         </Button>
       </Link>
       }
+       <Nav className="m-auto float-md-right">
+            <Form >
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                onChange={(e) => setSearch(e.target.value)}
+                inline="true"
+              />
+            </Form>
+          </Nav>
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
       )}
@@ -93,10 +105,11 @@ const Catagorialcontent = ({search}) => {
                         cursor: "pointer",
                         alignSelf: "center",
                         fontSize: 18,
-                        
+                        whiteSpace: "nowrap",
+                        overflow:"hidden",
                       }}
                     >
-                      <a href={`/content/${note._id}/${note.categoty}/${note.title}`}>
+                      <a href={`/content/${note._id}/${note.category}/${note.title}`}>
                       <div as={Card.Text} variant="link">
                        {note.title} 
                       </div>

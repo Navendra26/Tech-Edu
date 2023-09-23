@@ -7,6 +7,7 @@ import { deleteNoteAction, updateNoteAction } from "../../actions/notesAction";
 import ErrorMessage from "../../components/Errormessage";
 import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
+import  ReactMarkdown  from "react-markdown";
 
 function SingleNote({ match }) {
   // @deprecated: match come from react router dom for matching any value (here it is used for matchin our note._id) <- for this we used useParams.id
@@ -15,7 +16,7 @@ function SingleNote({ match }) {
   const [author, setAuthor] = useState("");
   const [elements, setElements] = useState([]);
   const [date, setDate] = useState("");
-
+  
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const id = useParams().id; // for matching the id which will be select for editing or deleting the notes
@@ -30,7 +31,7 @@ function SingleNote({ match }) {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteNoteAction(id));
     }
-    navigate(-1);
+    navigate('/contents');
   };
 
   useEffect(() => {
@@ -42,11 +43,16 @@ function SingleNote({ match }) {
       setAuthor(data.author);
       setElements(data.elements);
       setDate(data.updatedAt);
+      
     };
 
     fetching();
   }, [id, date]); // if id and/or date is going to change then useEffect rerender the page
-
+  function wantReset(){
+    if (window.confirm("Do you want to Reset?")) {
+      resetHandler();
+    }
+  }
   const resetHandler = () => {
     setTitle("");
     setCategory("");
@@ -61,7 +67,7 @@ function SingleNote({ match }) {
     if (!title || elements === 0 || !category || !author) return;
 
     resetHandler();
-    navigate(-1);
+    navigate("/contents");
   };
 
   const addElement = (elementType) => {
@@ -189,6 +195,12 @@ function SingleNote({ match }) {
                         updateElementValue(element.id, e.target.value)
                       }
                     />
+                     <Card>
+                    <Card.Header>Content Preview</Card.Header>
+                    <Card.Body>
+                      <ReactMarkdown>{element.value}</ReactMarkdown>
+                    </Card.Body>
+                  </Card>
                   </Form.Group>
                 )}
                 {element.type === "image" && (
@@ -210,6 +222,16 @@ function SingleNote({ match }) {
                         updateElementCaption(element.id, e.target.value)
                       }
                     />
+                     {(element.value !== "") && (
+                       <Card>
+                         <h4>Image Preview</h4>
+                       <img
+                           src={element.value}
+                           alt="Image Preview"
+                           style={{ maxWidth: '300px' }}
+                       />
+                       </Card>
+                 )}
                   </Form.Group>
                 )}
                 {element.type === "video" && (
@@ -277,7 +299,7 @@ function SingleNote({ match }) {
         </Card.Body>
 
         <Card.Footer className="text-muted">
-          Updated on - {date.substring(0, 10)}
+          Updated on - {date.substring(0, 19)}
         </Card.Footer>
       </Card>
     </MainScreen>

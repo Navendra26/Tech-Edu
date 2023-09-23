@@ -9,6 +9,7 @@ const getNotes = asyncHandler(async (req, res) => {
 
 const get10SortedNotes = asyncHandler(async (req, res) => {
    await Content.find() 
+   .select('-elements') // Exclude the 'elements' field
   .sort({createdAt:-1}) //sort by createdAt field in descending order
   .limit(10) // limit the result to 10 entries
   .then(note => res.json(note))

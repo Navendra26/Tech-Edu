@@ -51,6 +51,7 @@ const App = () => {
           <Route
             path="contents"
             Component={() => <AllContents search={search} />}
+            
           />{" "}
           <Route
             path="contents/:category"

@@ -152,7 +152,7 @@ const ProfileScreen = () => {
               justifyContent: "center",
             }}
           >
-            <img src={pic} alt={name} classname="profilePic" />
+            <img height={300} width={250} src={pic} alt={name} classname="profilePic" />
           </Col>
         </Row>
       </div>

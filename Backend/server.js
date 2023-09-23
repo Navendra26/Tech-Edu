@@ -26,6 +26,17 @@ app.get('/', (req,res)=> {   //get request get info from server(backend) and ser
   res.send("API is running...");
 });
 
+// API endpoint to check the admin secret
+app.post('/api/checkAdminSecret', (req, res) => {
+  const { adminSecret } = req.body;
+  if (adminSecret === process.env.ADMIN_SECRET) {
+    // Admin secret is valid
+    res.status(200).json({ message: 'Admin secret is valid.' });
+  } else {
+    // Admin secret is invalid
+    res.status(403).json({ message: 'Invalid admin secret.' });
+  }
+});
 /* 
 //fetch all from notes file
 app.get('/api/notes', (req, res) => {

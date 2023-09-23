@@ -47,7 +47,8 @@ const Footer = () => {
             </div>
           </Col>
          
-           <p className='py-3 text-white text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima sapiente eos quasi aliquam! Similique enim ducimus cumque, quae debitis, quas aliquid ea eaque quia unde distinctio eos non, vitae maxime?Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae animi aspernatur, velit qui labore consectetur soluta quibusdam perferendis ullam voluptates, odit recusandae optio. Consequuntur libero, accusamus non velit suscipit voluptate. Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores cum, in totam quas, exercitationem consequuntur eos ipsam!</p>
+           <p className='py-3 text-white text-center'>Our Ed-Tech website is your compass in navigating the exciting, ever-changing realm of educational technology. Join us on this transformative journey as we explore how technology can enhance learning, inspire creativity, and shape the future of education. Together, let's unlock the full potential of Ed-Tech to revolutionize the way we teach and learn.
+</p>
        </Row>
      </Container>
    </footer>

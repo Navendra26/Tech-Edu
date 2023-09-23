@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./FrontPage.css";
-import {} from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import logo from "./images/logo-edtech.png";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 import { list10sortedNotes } from "../../actions/notesAction";
 import { Result } from "./SlideShow";
+import user1 from "./images/user1.jpg";
+import user2 from "./images/user2.jpg";
+
 
 /* https://source.unsplash.com/1200x400/?coding,javascript */
 const FrontPage = () => {
@@ -18,7 +19,7 @@ const FrontPage = () => {
   const { notes } = noteList;
   let cates = new Set();
   notes?.forEach((note) => {
-      cates.add(note.category);
+    cates.add(note.category);
   });
   const categ = [...cates];
 
@@ -29,59 +30,79 @@ const FrontPage = () => {
     dispatch(list10sortedNotes());
   }, [dispatch]);
 
-  const toggleHadler = ()=>{
-    clicked?
-    setClicked(false): setClicked(true); 
-    clicked? setArrow("fa-solid fa-chevron-left"):setArrow("fa-solid fa-chevron-right");
-  }
+  /* const toggleHadler = () => {
+    clicked ? setClicked(false) : setClicked(true);
+    clicked
+      ? setArrow("fa-solid fa-chevron-left")
+      : setArrow("fa-solid fa-chevron-right");
+  }; */
   return (
     <>
-      <marquee
-        direction="right"
-        scrollamount="5"
-        bgcolor="green"
-        className="marquee"
-      >
+      <marquee direction="left" scrollamount="5" className="marquee">
         {" "}
         This is the best website for your up Skilling
       </marquee>
       <div>
-        <section  className="frontend">
-          <section style={{width: clicked ? "30px": ""}} className="sidenav">
-          <i onClick={toggleHadler}
-          className={arrow} style={{cursor:"pointer", float:"right", marginTop:"-10px", paddingRight:"5px"}}></i>
-            <h5 className="pt-3 text-center" style={{textOrientation:clicked? "upright": "", writingMode: clicked? "vertical-lr":"", fontWeight: clicked?"600":""}}>Our Contents</h5>
+        <section className="frontend">
+         {/*  <section style={{ width: clicked ? "30px" : "" }} className="sidenav">
+            <i
+              onClick={toggleHadler}
+              className={arrow}
+              style={{
+                cursor: "pointer",
+                float: "right",
+                marginTop: "-10px",
+                paddingRight: "5px",
+              }}
+            ></i>
+            <h5
+              className="pt-3 text-center"
+              style={{
+                textOrientation: clicked ? "upright" : "",
+                writingMode: clicked ? "vertical-lr" : "",
+                fontWeight: clicked ? "600" : "bold",
+              }}
+            >
+              Our Contents
+            </h5>
             <hr className="py-0" />
             <div className="list">
-              {categ.map((value) => (
-                clicked ? "":
-                <Link
-                  to={`/contents/${value
-                    .replace(/ /g, " ")
-                    .toLowerCase()}`}
-                >
-                  {" "}
-                  {/* replacing spaces between words in a string */}
-                  {value}
-                </Link> 
-              )) }
-              
+              {categ.map((value) =>
+                clicked ? (
+                  ""
+                ) : (
+                  <Link
+                    to={`/contents/${value.replace(/ /g, " ").toLowerCase()}`}
+                  >
+                    {" "}
+                    
+                    {value}
+                  </Link>
+                )
+              )}
             </div>
-          </section>
+          </section> */}
           <section className="header">
             <header className="headers">
-              <img src={logo} alt="logo" width={130} />
-              <div className="title">
-                <h1>Ed-TECH Plateform</h1>
-              </div>
+              <h1>Ed-TECH Plateform</h1>
             </header>
             <div className="text-box">
               <h1>World's Biggest Plateform</h1>
               <p>
-                Making websiteis now one of the easist thing in the world. You
-                just need to learn HTML, CSS,
-                <br />
-                Javascript and you are good to go.
+                Welcome to our Ed-Tech website, a dynamic platform dedicated to
+                the transformation of education through technology. In an era
+                where digital innovation plays a pivotal role in shaping the way
+                we learn and teach, our website serves as your indispensable
+                guide to the world of educational technology.
+                <br /> <br />
+                Our website offers a comprehensive resource for educators,
+                students, and parents alike, aiming to bridge the gap between
+                traditional and modern learning methods. We delve into a myriad
+                of topics, including online learning platforms, virtual
+                classrooms, educational apps, and cutting-edge teaching tools.
+                From the novice to the tech-savvy, we cater to all levels of
+                digital literacy, providing insights and tutorials for seamless
+                integration into educational settings.
               </p>
               <a href="/aboutus " className="hero-btn">
                 Visit Us to Know More
@@ -106,30 +127,48 @@ const FrontPage = () => {
 
             <div className="row">
               <div className="skill-col">
-                <h3>Top Skills</h3>
+                <h3>Tutorials and Guides</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Officia eos, amet quasi alias est ipsum quo optio mollitia
-                  veniam iste fuga veritatis, natus quia praesentium, ea dolorem
-                  vero harum quisquam.
+                  Step-by-step tutorials and user-friendly guides to help you
+                  harness the full potential of technology in education, whether
+                  you're a teacher, student, or parent.
                 </p>
               </div>
               <div className="skill-col">
-                <h3>Technical Skills</h3>
+                <h3>Case Studies</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Officia eos, amet quasi alias est ipsum quo optio mollitia
-                  veniam iste fuga veritatis, natus quia praesentium, ea dolorem
-                  vero harum quisquam.
+                  Real-world examples of successful technology integration in
+                  classrooms, showcasing the positive impact of ed-tech on
+                  teaching and learning outcomes.
                 </p>
               </div>
               <div className="skill-col">
-                <h3>Soft Skill</h3>
+                <h3>Latest Trends and Innovations</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Officia eos, amet quasi alias est ipsum quo optio mollitia
-                  veniam iste fuga veritatis, natus quia praesentium, ea dolorem
-                  vero harum quisquam.
+                  Stay up-to-date with the latest trends, breakthroughs, and
+                  innovations in the world of educational technology.
+                </p>
+              </div>
+              <div className="skill-col">
+                <h3>News and Updates</h3>
+                <p>
+                  Regularly updated news articles, blogs, and feature stories on
+                  the evolving landscape of education and technology.
+                </p>
+              </div>
+              <div className="skill-col">
+                <h3>Community Hub</h3>
+                <p>
+                  Connect with a community of educators, students, and tech
+                  enthusiasts to share experiences, ideas, and best practices.
+                </p>
+              </div>
+              <div className="skill-col">
+                <h3>In-Depth Reviews</h3>
+                <p>
+                  Unbiased reviews of popular ed-tech solutions, helping you
+                  make informed decisions about the tools and platforms that
+                  best suit your needs.
                 </p>
               </div>
             </div>
@@ -166,40 +205,77 @@ const FrontPage = () => {
 
           <section className="benefit">
             <h1>Benefits of this Website</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p>
+              Educational technology (Ed-Tech) websites offer a wide range of
+              benefits to students, educators, parents, and anyone interested in
+              learning. Here are some key advantages of using Ed-Tech websites
+            </p>
 
             <div className="row">
               <div className="benefit-col">
                 <img
-                  src="https://source.unsplash.com/1200x400/?library"
+                  src="https://source.unsplash.com/1200x400/?analytics"
                   alt=""
                 />
-                <h3>World's Top Content Creator</h3>
+                <h3>Personalized Learning</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Quidem incidunt debitis consectetur maxime id quam saepe.
+                  Many Ed-Tech platforms use data analytics and AI to tailor
+                  content to individual learning needs. This adaptive learning
+                  approach helps students progress at their own pace.
                 </p>
               </div>
               <div className="benefit-col">
                 <img
-                  src="https://source.unsplash.com/1200x400/?basketball"
+                  src="https://source.unsplash.com/1200x400/?multimedia"
                   alt=""
                 />
-                <h3>100% Job guaranties</h3>
+                <h3>Interactive Learning</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Quidem incidunt debitis consectetur maxime id quam saepe.
+                  Ed-Tech websites often incorporate multimedia elements,
+                  simulations, quizzes, and interactive exercises that engage
+                  learners and make learning more enjoyable and effective.
+                </p>
+              </div>
+              <div className="benefit-col">
+                <img src="https://source.unsplash.com/1200x400/?skill" alt="" />
+                <h3>Skill Development</h3>
+                <p>
+                  Beyond traditional academic subjects, Ed-Tech platforms often
+                  offer courses and resources for acquiring practical skills,
+                  such as coding, digital marketing, or data analysis.
                 </p>
               </div>
               <div className="benefit-col">
                 <img
-                  src="https://source.unsplash.com/1200x400/?cafeteria"
+                  src="https://source.unsplash.com/1200x400/?income"
                   alt=""
                 />
-                <h3>Learn New Things</h3>
+                <h3>Global Reach for Educators</h3>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Quidem incidunt debitis consectetur maxime id quam saepe.
+                  Ed-Tech allows educators to reach a global audience, creating
+                  opportunities for sharing expertise and generating income
+                  through online courses.
+                </p>
+              </div>
+              <div className="benefit-col">
+                <img
+                  src="https://source.unsplash.com/1200x400/?e-books"
+                  alt=""
+                />
+                <h3>Varied Learning Resources</h3>
+                <p>
+                  These websites offer a diverse range of learning materials,
+                  including videos, e-books, podcasts, and interactive modules,
+                  catering to different learning styles.
+                </p>
+              </div>
+              <div className="benefit-col">
+                <img src="https://source.unsplash.com/1200x400/?accessibility" alt="" />
+                <h3>Accessibility</h3>
+                <p>
+                  Ed-Tech websites provide access to educational resources and
+                  materials 24/7, breaking down geographical and time
+                  constraints. Learners can access content at their convenience.
                 </p>
               </div>
             </div>
@@ -211,7 +287,7 @@ const FrontPage = () => {
             <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
             <div className="row">
               <div className="testimonials-col">
-                <img src="https://source.unsplash.com/400x400/?user" alt="" />
+                <img src={user1} alt="" />
                 <div>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
@@ -228,7 +304,7 @@ const FrontPage = () => {
                 </div>
               </div>
               <div className="testimonials-col">
-                <img src="https://source.unsplash.com/400x400/?users" alt="" />
+                <img src={user2} alt="" />
                 <div>
                   <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut

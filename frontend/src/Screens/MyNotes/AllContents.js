@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Accordion, Button, Card } from "react-bootstrap";
+import { Accordion, Button, Card, Form, FormControl, Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Mainscreen from "../../components/Mainscreen";
 // import axios from "axios";   it had been imported bcz we were fetching notes diretly from the server's api
@@ -8,7 +8,8 @@ import { deleteNoteAction, listNotes } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 
-const AllContents = ({search}) => {
+const AllContents = () => {
+  const [search, setSearch] = useState("");
   const [admin, setAdmin] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,7 +53,7 @@ const AllContents = ({search}) => {
 
 
   return (
-    <Mainscreen title= {userInfo ?`Welcome Back To our All Contents ${userInfo.name}..`: "WelCome to Our Tech-Ed "}>
+    <Mainscreen title= {userInfo ?`Welcome Back To our All Contents `: "WelCome to Our Tech-Ed "}>
      {admin &&
       <Link to={"createcontent"}>
         {/* here (/createnote will take us just after localhost:_port) slash will not be used bcoz we want path should be after AllContents/ */}
@@ -61,6 +62,17 @@ const AllContents = ({search}) => {
         </Button>
       </Link>
      }
+      <Nav className="m-auto float-md-right">
+            <Form >
+              <FormControl
+                type="text"
+                placeholder="Search"
+                className="mr-sm-2"
+                onChange={(e) => setSearch(e.target.value)}
+                inline="true"
+              />
+            </Form>
+          </Nav>
       {errorDelete && (
         <ErrorMessage variant="danger">{errorDelete}</ErrorMessage>
       )}

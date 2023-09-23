@@ -37,22 +37,43 @@ const RegisterScreen = () => {
   }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
-    if (isAdmin && secretKey !== "Technical") {
-      e.preventDefault();
-      setMessage("Invalid Admin");
+    e.preventDefault();
+    if (isAdmin) {
+      try {
+        const response = await fetch('/api/checkAdminSecret', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ adminSecret : secretKey }),
+        });
+  
+        if (response.status === 200) {
+          // Admin secret is valid, proceed with admin registration
+          e.preventDefault();
+          
+          if (password !== confirmpassword) {
+              setMessage("Passwords Do not Match");
+          }
+          // (After using redux)
+          // dispatching all of these stuff from register() definded under userAction.js file
+          else {
+              dispatch(register(name, email, password, isAdmin, pic));
+              setMessage("Successfully Registered")
+          }
+        } else {
+          // Admin secret is invalid, show an error message
+          setMessage("Invalid Admin");
+        }
+      } catch (error) {
+          e.preventDefault();
+        // Handle any network or server errors here
+        setMessage("An error occurred. Please try again.");
+      }
     } else {
-      e.preventDefault();
-
-      if (password !== confirmpassword) {
-        setMessage("Passwords Do not Match");
-        
-      }
-      // (After using redux)
-      // dispatching all of these stuff from register() definded under userAction.js file
-      else {
-        dispatch(register(name, email, password, isAdmin, pic));
-        setMessage("Successfully Registered")
-      }
+      // Proceed with user registration
+      dispatch(register(name, email, password, isAdmin, pic));
+      setMessage("Successfully Registered");
     }
     /* else {
       setMessage(null);
@@ -125,7 +146,7 @@ const RegisterScreen = () => {
     <Mainscreen title="REGISTER">
       <div className="loginContainer">
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-        {message && <ErrorMessage variant="danger">{message}</ErrorMessage>}
+        {message && <ErrorMessage variant="success">{message}</ErrorMessage>}
         {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <div>

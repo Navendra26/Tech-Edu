@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { createNoteAction } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
+import ReactMarkdown from 'react-markdown';
 
 function CreateNote() {
   const [title, setTitle] = useState("");
@@ -23,7 +24,11 @@ function CreateNote() {
 
   const userLogin = useSelector((state) => state.userLogin); //using this state becoz we want to go on login screen page whenever user logout
   const { userInfo } = userLogin;
-
+  function wantReset(){
+    if (window.confirm("Do you want to Reset?")) {
+      resetHandler();
+    }
+  }
   const resetHandler = () => {
     setTitle("");
     setCategory("");
@@ -83,7 +88,6 @@ function CreateNote() {
 
       const responseData = await response.json();
       const imageUrl = responseData.url.toString();
-
       // Here, you need to update the state for the specific image element
       // You can do this by mapping through the elements and finding the element with the specific id
       const updatedElements = elements.map((element) => {
@@ -164,6 +168,7 @@ function CreateNote() {
 
             {elements.map((element) => (
               <React.Fragment key={element.id}>
+                <>
                 {element.type === "paragraph" && (
                   <Form.Group controlId={`content-${element.id}`}>
                     <Form.Label>Paragraph</Form.Label>
@@ -176,8 +181,19 @@ function CreateNote() {
                         updateElementValue(element.id, e.target.value)
                       }
                     />
+                { (element.value !== "") && 
+                 ( <Card>
+                    <Card.Header>Content Preview</Card.Header>
+                    <Card.Body>
+                      <ReactMarkdown>{element.value}</ReactMarkdown>
+                    </Card.Body>
+                  </Card>)
+                }
+                
                   </Form.Group>
-                )}
+                )
+              }
+              </>
                 {element.type === "image" && (
                   <Form.Group controlId={`image-${element.id}`}>
                     <Form.Label>Image</Form.Label>
@@ -197,7 +213,17 @@ function CreateNote() {
                       onChange={(e) =>
                         updateElementCaption(element.id, e.target.value)
                       }
-                    />
+                      />
+                      {(element.value !== "") && (
+                        <Card>
+                          <Card.Header>Image Preview</Card.Header>
+                          <img
+                              src={element.value}
+                              alt="Image Preview"
+                              style={{ maxWidth: '300px' }}
+                          />
+                        </Card>
+                 )}
                   </Form.Group>
                 )}
                 {element.type === "video" && (
@@ -227,42 +253,34 @@ function CreateNote() {
                   className="bg-danger"
                   onClick={() => deleteElement(element.id)}
                 >
-                  <i className="fa fa-multiply"></i> CUT
+                  <i className="fa fa-multiply"></i> Remove
                 </button>
               </React.Fragment>
             ))}
             <br />
             <br />
-            {/*  USING REACTMARKDOWN FOR CONTENT PREVIEW ------
-            {(elements.length !== 0 ) && (
-              <Card>
-                <Card.Header>Content Preview</Card.Header>
-                <Card.Body>
-                  <ReactMarkdown>{elements}</ReactMarkdown>
-                </Card.Body>
-              </Card>
-            )} */}
+            
             <div
               style={{
                 display: "flex",
                 justifyContent: "flex-end",
               }}
             >
-              <button type="button" onClick={() => addElement("paragraph")}>
-                <i className="fa fa-plus"></i>paragraph
-              </button>
-              <button type="button" onClick={() => addElement("image")}>
+              <Button variant="success" onClick={() => addElement("paragraph")}>
+                <i className="fa fa-plus"></i>Text
+              </Button>
+              <Button variant="success" onClick={() => addElement("image")}>
                 <i className="fa fa-plus"></i>image
-              </button>
-              <button type="button" onClick={() => addElement("video")}>
+              </Button>
+              <Button variant="success" onClick={() => addElement("video")}>
                 <i className="fa fa-link"></i> Add YouTube Video
-              </button>
+              </Button>
             </div>
 
             <Button type="submit" variant="primary">
               Create Your Content
             </Button>
-            <Button className="mx-2" onClick={resetHandler} variant="danger">
+            <Button className="mx-2" onClick={wantReset} variant="danger">
               Reset Fields
             </Button>
           </Form>

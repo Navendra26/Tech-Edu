@@ -9,6 +9,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../actions/userActions";
+import logo from "./A.png";
 
 const Header = ({ setSearch }) => {
   const navigate = useNavigate();
@@ -27,14 +28,25 @@ const Header = ({ setSearch }) => {
 
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
-        <Navbar.Brand>
-         
-          <Link to="/">TECH-ED</Link>
+        <Navbar.Brand >
+          <Link to="/" style={{display:"flex"}}>
+         <img src={logo} height={50} width={50} alt=""/>
+          <h3> Aprender</h3>
+          </Link>
         </Navbar.Brand>
         <Nav>
-          <Nav.Link>
-            <Link to="/contents/technical skill">Technical Skill</Link>
-          </Nav.Link>
+        <NavDropdown title="Technical Skill" id="basic-nav-dropdown">
+           
+           <NavDropdown.Item>
+             <Link to="/contents/programming">Programming</Link>
+           </NavDropdown.Item>
+           <NavDropdown.Item>
+             <Link to="/contents/cs fundamental">CS Fundamental</Link>
+           </NavDropdown.Item>
+           <NavDropdown.Item>
+             <Link to="/contents/manager"></Link>
+           </NavDropdown.Item>
+         </NavDropdown>
           <Nav.Link >
             <Link to="/contents/effective communication">Effective Communication</Link>
           </Nav.Link>
@@ -44,47 +56,32 @@ const Header = ({ setSearch }) => {
           <NavDropdown title="LeaderShip Quality" id="basic-nav-dropdown">
            
             <NavDropdown.Item>
-              <Link to="/contents/leadership/bussiness leader">bussiness Leader</Link>
+              <Link to="/contents/business leader">business Leader</Link>
             </NavDropdown.Item>
             <NavDropdown.Item>
-              <Link to="/contents/leadership/group leader">Group Leader</Link>
+              <Link to="/contents/group leader">Group Leader</Link>
             </NavDropdown.Item>
             <NavDropdown.Item>
-              <Link to="/contents/leadership/manager">Manager</Link>
+              <Link to="/contents/manager">Manager</Link>
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="m-auto">
-            <Form >
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-                onChange={(e) => setSearch(e.target.value)}
-                inline="true"
-              />
-            </Form>
-          </Nav>
-          <Nav>
+          
+          <Nav  className="ml-auto">
             {" "}
             {userInfo ? (
-               <Nav>
+               <Nav >
                <Nav.Link>
                  <Link to="/contents">All Contentes</Link>
                </Nav.Link>
              
               <NavDropdown title={userInfo?.name} id="basic-nav-dropdown">
                 {" "}
-                {/* we can make it optional chaining by '?' there */}
                 <NavDropdown.Item href="/profile">My Profile</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item
-                  /*  onClick={() => {  // before using redux
-                localStorage.removeItem("userInfo");
-                navigate("/");
-              }} */
                   onClick={logoutHandler}
                 >
                   Logout
@@ -92,7 +89,7 @@ const Header = ({ setSearch }) => {
               </NavDropdown>
               </Nav>
             ) : (
-              <Nav>
+              <Nav >
                 <Nav.Link>
                   <Link to="/auth">Login/signUp</Link>
                 </Nav.Link>

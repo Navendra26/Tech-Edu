@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import './FrontPage.css';
 
 const Slideshow = ({ images, interval }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -36,6 +37,7 @@ export function Result(props) {
         category={item.category}
         title={item.title}
         author={item.author}
+        id={item._id}
       />
     );
   });
@@ -43,8 +45,10 @@ export function Result(props) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "auto auto auto",
-        gap: "50px",
+        gridTemplateColumns: "330px 330px 330px",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        gap: "30px",
         marginTop: "10px",
       }}
     >
@@ -64,30 +68,48 @@ const Box = (props) => {
     setIsHovering(false);
   };
   return (
-    <a href={`/contents/${props.category.replace(/ /g, " ").toLowerCase()}`}>
-      <div
+    <a href={`/content/${props.id}/${props.category}/${props.title}`}>
+      <div className="noteBox"
         style={{
-          boxShadow: isHovering ? "2px 2px 10px 2px rgb(24,120,200)" : " ",
+          boxShadow: isHovering ? "1px 1px 10px .5px " : " ",
+          border: "2px solid",
+          borderRadius: "8px",
           marginTop: "20px",
           height: "120px",
-          backgroundColor: "rgba(24,120,200,.4)",
+          backgroundColor: "#c5e3ed",
           position: "relative",
           display: "flex",
           flexDirection: "column",
           alignItems: "space-between",
           paddingTop: 10,
+          fontFamily: "cursive",
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <span style={{ fontSize: "20px", marginTop: "20px" }}>
+        <div 
+          style={{
+            display: "-webkit-box",
+            webkitBoxOrient: "vertical",
+            WebkitLineClamp: "2",
+            height: "60px",
+            overflow: "hidden",
+            fontSize: "20px",
+            marginTop: "20px",
+          }}
+        >
           {props.title}
-        </span>
+        </div>
         <footer
-          style={{ color: "red", position: "absolute", bottom: 2, right: 2 }}
+          style={{
+            color: "#220361",
+            position: "absolute",
+            bottom: 2,
+            right: 2,
+          }}
         >
           {" "}
-          _{props.author}
+          -{props.author}
         </footer>
       </div>
     </a>
