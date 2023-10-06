@@ -4,9 +4,11 @@
   "description": "tech-edu site is used for gaining technical skill and best knowledge of technical world",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon Backend/server.js",
+    "start": "node Backend/server.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm start\" \"npm run client\""
+    "server": "nodemon backend/server.js",
+    "dev": "concurrently \"npm start\" \"npm run client\"",
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Navendra_B",
   "license": "ISC",

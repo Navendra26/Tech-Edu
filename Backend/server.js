@@ -22,10 +22,6 @@ connectDB(); // To connect mongoDB in our project(nodeJs / expressJs) we have to
 app.use(express.json()); // use every time when we have to accept data from the userside
 
 
-app.get('/', (req,res)=> {   //get request get info from server(backend) and serve it to front end
-  res.send("API is running...");
-});
-
 // API endpoint to check the admin secret
 app.post('/api/checkAdminSecret', (req, res) => {
   const { adminSecret } = req.body;
@@ -57,20 +53,20 @@ app.use("/api/contact",contactRoutes);
 
 // -----------------------------Deployment -------------------------------------------
    
-   /*   __dirname = path.resolve();
-    if(process.env.NODE_ENV === 'production') {     // if project is not ready for deployment then its value should be 'developement' 
+     __dirname = path.resolve();
+    if(process.env.NODE_ENV === "production") {     // if project is not ready for deployment then its value should be 'developement' 
        app.use(express.static(path.join(__dirname, '/frontend/build')));       // use static folder called build from frontend
 
        app.get('*', (req, res) =>{    // this will check all routes other than our routes(noteRoutes and userRoutes)    ->and whenever we run our backend it going to serve our frontend to the localhost 5000 
         
         res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));   // send response from current folder(__dirname) to frontend then build and index.html of build folder
-       })  
+       });  
   }
    else{
     app.get('/', (req,res)=> {  
-      res.send("API is running...");
+      res.send("API is running successfully...");
     });
-  }  */
+  } 
 // -----------------------------Deployment -------------------------------------------
 
 app.use(notFound);  //using from errorMiddleWare file
