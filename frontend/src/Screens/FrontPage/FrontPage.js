@@ -41,7 +41,7 @@ const FrontPage = () => {
         {" "}
         This is the best website for your up Skilling
       </marquee>
-      <div>
+      <div style={{overflow:"hidden"}}>
         <section className="frontend">
          {/*  <aside style={{ width: clicked ? "30px" : "" }} className="sidenav">
             <i

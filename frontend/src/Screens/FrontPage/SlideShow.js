@@ -48,7 +48,7 @@ export function Result(props) {
     <div 
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(330px,1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(280px,1fr))",
         overflow: "hidden",
         textOverflow: "ellipsis",
         gap: "30px",
