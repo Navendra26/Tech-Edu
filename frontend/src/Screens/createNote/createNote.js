@@ -158,13 +158,7 @@ function CreateNote() {
               <Form.Label>
                 Category<span style={{ color: "red" }}>*</span>
               </Form.Label>
-              <Form.Select aria-label="category">
-      <option>Select Your content Category</option>
-      <option value={category}>One</option>
-      <option value={category}>Two</option>
-      <option value={category}>Three</option>
-      
-    </Form.Select>
+             
               <Form.Control
                 type="category"
                 value={category}

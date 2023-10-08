@@ -29,7 +29,7 @@ const Header = ({ setSearch }) => {
   return (
     <Navbar bg="primary" expand="lg" variant="dark">
         <Navbar.Brand >
-          <Link to="/" style={{display:"flex"}}>
+          <Link to="/" style={{display:"flex", border:"2px solid white", borderRadius:"8px"}}>
          <img src={logo} height={50} width={50} alt=""/>
           <h3> Aprender</h3>
           </Link>
