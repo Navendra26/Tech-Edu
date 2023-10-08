@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./FrontPage.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 import { list10sortedNotes } from "../../actions/notesAction";
@@ -44,7 +43,7 @@ const FrontPage = () => {
       </marquee>
       <div>
         <section className="frontend">
-         {/*  <section style={{ width: clicked ? "30px" : "" }} className="sidenav">
+         {/*  <aside style={{ width: clicked ? "30px" : "" }} className="sidenav">
             <i
               onClick={toggleHadler}
               className={arrow}
@@ -81,7 +80,7 @@ const FrontPage = () => {
                 )
               )}
             </div>
-          </section> */}
+          </aside> */}
           <section className="header">
             <header className="headers">
               <h1>Ed-TECH Plateform</h1>

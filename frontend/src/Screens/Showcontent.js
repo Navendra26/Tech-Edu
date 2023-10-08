@@ -8,7 +8,6 @@ import ReactMarkdown from "react-markdown";
 const Showcontent = () => {
   const [title, setTitle] = useState();
   const [elements, setElements] = useState([]);
-  const [category, setCategory] = useState();
   const [author, setAuthor] = useState();
   const [createdBy, setCreatedBy] = useState("");
   const [createdAt, setCreatedAt] = useState("");
@@ -26,7 +25,6 @@ const Showcontent = () => {
 
       setTitle(data.title);
       setElements(data.elements);
-      setCategory(data.category);
       setAuthor(data.author);
       setCreatedAt(data.createdAt);
       setCreatedBy(data.createdBy);
@@ -90,20 +88,20 @@ const Showcontent = () => {
                                  {ele.caption}
                               </i>
                             </div>{" "}
-                            <img src={ele.value} alt="image"></img>{" "}
+                            <img style={{width:"100%", height:"auto"}}  src={ele.value} alt=""></img>{" "}
                             <hr />{" "}
                           </div>
                         )}
                         {ele.type === "video" && (
-                          <div style={{ margin: "3px" }}>
+                          <div style={{ margin: "3px",position:"relative", overflow:"hidden", width:"100%", paddingTop:"56.25%"}}>
                             You Can also refer to{" "}
                             <span style={{ color: "green" }}>
                               {ele.caption}
                             </span>{" "}
                             below <br />{" "}
-                            <iframe
-                              width={600}
-                              height={350}
+                            <iframe title="video"
+                            style={{position:"absolute",left:0, right:0, top:0, bottom:0, width:"100%", height:"100%" }}
+                              
                               src={`https://www.youtube.com/embed/${ele.value}`}
                               allowFullScreen
                             ></iframe>{" "}

@@ -29,6 +29,9 @@ const Slideshow = ({ images, interval }) => {
 
 export default { Slideshow };
 
+
+//--------------------------------------------------------------------------------------------
+
 export function Result(props) {
   const boxes = props.notes?.map((item, index) => {
     return (
@@ -42,10 +45,10 @@ export function Result(props) {
     );
   });
   return (
-    <div
+    <div 
       style={{
         display: "grid",
-        gridTemplateColumns: "330px 330px 330px",
+        gridTemplateColumns: "repeat(auto-fit, minmax(330px,1fr))",
         overflow: "hidden",
         textOverflow: "ellipsis",
         gap: "30px",
@@ -69,8 +72,9 @@ const Box = (props) => {
   };
   return (
     <a href={`/content/${props.id}/${props.category}/${props.title}`}>
-      <div className="noteBox"
+      <div className="noteBox container-fluid "
         style={{
+          boxSizing:"border-box",
           boxShadow: isHovering ? "1px 1px 10px .5px " : " ",
           border: "2px solid",
           borderRadius: "8px",
