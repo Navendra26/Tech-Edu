@@ -37,10 +37,10 @@ const FrontPage = () => {
   }; */
   return (
     <>
-      <marquee direction="left" scrollamount="5" className="marquee">
+      {/* <marquee direction="left" scrollamount="5" className="marquee">
         {" "}
         This is the best website for your up Skilling
-      </marquee>
+      </marquee> */}
       <div style={{overflow:"hidden"}}>
         <section className="frontend">
          {/*  <aside style={{ width: clicked ? "30px" : "" }} className="sidenav">
@@ -83,10 +83,10 @@ const FrontPage = () => {
           </aside> */}
           <section className="header">
             <header className="headers">
-              <h1>Ed-TECH Plateform</h1>
+              <h1>Ed-TECH Platform</h1>
             </header>
             <div className="text-box">
-              <h1>World's Biggest Plateform</h1>
+              <h1>World's Best Learning Platform</h1>
               <p>
                 Welcome to our Ed-Tech website, a dynamic platform dedicated to
                 the transformation of education through technology. In an era

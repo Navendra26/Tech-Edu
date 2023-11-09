@@ -7,7 +7,8 @@ import { deleteNoteAction, updateNoteAction } from "../../actions/notesAction";
 import ErrorMessage from "../../components/Errormessage";
 import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
-import  ReactMarkdown  from "react-markdown";
+// import  ReactMarkdown  from "react-markdown";
+import JoditEditor from "jodit-react";
 
 function SingleNote({ match }) {
   // @deprecated: match come from react router dom for matching any value (here it is used for matchin our note._id) <- for this we used useParams.id
@@ -184,25 +185,32 @@ function SingleNote({ match }) {
             {elements.map((element) => (
               <React.Fragment key={element.id}>
                 {element.type === "paragraph" && (
-                  <Form.Group controlId={`content-${element.id}`}>
-                    <Form.Label>Paragraph</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      value={element.value}
-                      placeholder="Enter the content"
-                      rows={4}
-                      onChange={(e) =>
-                        updateElementValue(element.id, e.target.value)
-                      }
-                    />
-                     <Card>
-                    <Card.Header>Content Preview</Card.Header>
-                    <Card.Body>
-                      <ReactMarkdown>{element.value}</ReactMarkdown>
-                    </Card.Body>
-                  </Card>
-                  </Form.Group>
+                //   <Form.Group controlId={`content-${element.id}`}>
+                //     <Form.Label>Paragraph</Form.Label>
+                //     <Form.Control
+                //       as="textarea"
+                //       value={element.value}
+                //       placeholder="Enter the content"
+                //       rows={4}
+                //       onChange={(e) =>
+                //         updateElementValue(element.id, e.target.value)
+                //       }
+                //     />
+                //      <Card>
+                //     <Card.Header>Content Preview</Card.Header>
+                //     <Card.Body>
+                //       <ReactMarkdown>{element.value}</ReactMarkdown>
+                //     </Card.Body>
+                //   </Card>
+                //   </Form.Group>
+                <JoditEditor
+                  //ref={editor}
+                  value={element.value}
+                  // config={config}
+                  onBlur={(newContent) => updateElementValue(element.id, newContent)} 
+                />
                 )}
+                
                 {element.type === "image" && (
                   <Form.Group controlId={`image-${element.id}`}>
                     <Form.Label>Image</Form.Label>
@@ -234,7 +242,7 @@ function SingleNote({ match }) {
                  )}
                   </Form.Group>
                 )}
-                {element.type === "video" && (
+               {/*  {element.type === "video" && (
                   <Form.Group controlId={`video-${element.id}`}>
                     <Form.Label>YouTube Video URL</Form.Label>
                     <Form.Control
@@ -255,14 +263,14 @@ function SingleNote({ match }) {
                       }
                     />
                   </Form.Group>
-                )}
-                <button
-                  type="button"
+                )} */}
+                <Button
+                 variant="danger"
                   className="bg-danger"
-                  onClick={() => deleteElement(element.id)}
+                  onClick={() => {if(window.confirm("Do you want to Delete?")) deleteElement(element.id)}}
                 >
-                  <i className="fa fa-multiply"></i> CUT
-                </button>
+                  <i className="fa fa-multiply"></i> REMOVE
+                </Button>
               </React.Fragment>
             ))}
             <br />
@@ -274,15 +282,15 @@ function SingleNote({ match }) {
                 justifyContent: "flex-end",
               }}
             >
-              <button type="button" onClick={() => addElement("paragraph")}>
+              <Button variant="success" onClick={() => addElement("paragraph")}>
                 <i className="fa fa-plus"></i>paragraph
-              </button>
-              <button type="button" onClick={() => addElement("image")}>
+              </Button>
+              <Button variant="success" onClick={() => addElement("image")}>
                 <i className="fa fa-plus"></i>image
-              </button>
-              <button type="button" onClick={() => addElement("video")}>
+              </Button>
+{/*               <Button variant="success" onClick={() => addElement("video")}>
                 <i className="fa fa-link"></i> Add YouTube Video
-              </button>
+              </Button> */}
             </div>
             {loading && <Loading size={50} />}
             <Button variant="primary" type="submit">

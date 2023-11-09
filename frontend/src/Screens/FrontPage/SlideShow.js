@@ -87,6 +87,7 @@ const Box = (props) => {
           alignItems: "space-between",
           paddingTop: 10,
           fontFamily: "cursive",
+          backgroundImage: "linear-gradient(to top, #c4ecea, #c4eee5, #c7efde, #ccf0d7, #d4f0cf)"
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

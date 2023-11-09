@@ -1,7 +1,5 @@
 import React from "react";
 import {
-  Form,
-  FormControl,
   Nav,
   Navbar,
   NavDropdown,
@@ -11,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../actions/userActions";
 import logo from "./A.png";
 
-const Header = ({ setSearch }) => {
+const Header = () => {
   const navigate = useNavigate();
 
   // after adding redux
@@ -27,13 +25,17 @@ const Header = ({ setSearch }) => {
   };
 
   return (
-    <Navbar bg="primary" expand="lg" variant="dark">
+    <>
+    <Navbar style={{backgroundColor:"rgba(0,0,115,.8)", padding:"0px 5px", textAlign:"center"}}>
         <Navbar.Brand >
           <Link to="/" style={{display:"flex", border:"2px solid white", borderRadius:"8px"}}>
          <img src={logo} height={50} width={50} alt=""/>
           <h3> Aprender</h3>
           </Link>
         </Navbar.Brand>
+      <h1 style={{paddingLeft:"20px", color:"floralwhite", fontFamily:"cursive"}}>Gain Knowledge with Fun and a New Way 🤡</h1>
+    </Navbar>
+    <Navbar bg="primary" expand="lg" variant="dark">
         <Nav>
         <NavDropdown title="Technical Skill" id="basic-nav-dropdown">
            
@@ -98,6 +100,7 @@ const Header = ({ setSearch }) => {
           </Nav>
         </Navbar.Collapse>
     </Navbar>
+    </>
   );
 };
 

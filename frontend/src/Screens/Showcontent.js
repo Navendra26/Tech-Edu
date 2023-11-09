@@ -3,7 +3,8 @@ import { Badge, Button, Card } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Mainscreen from "../components/Mainscreen";
 import axios from "axios";
-import ReactMarkdown from "react-markdown";
+//import ReactMarkdown from "react-markdown";
+import parse from "html-react-parser"
 
 const Showcontent = () => {
   const [title, setTitle] = useState();
@@ -70,12 +71,12 @@ const Showcontent = () => {
                 </h4>
                 <blockquote className="blockquote mb-0">
                   <div>
-                    {elements.map((ele, idx) => (
+                     {elements.map((ele, idx) => (
                       <div key={idx}>
                         {ele.type === "paragraph" && (
                           <div >
-                            <ReactMarkdown>{ele.value}</ReactMarkdown>
-
+                            {/* <ReactMarkdown>{ele.value}</ReactMarkdown> */}
+                            {parse(ele.value)}
                             <br />
                           </div>
                         )}{" "}
@@ -92,7 +93,7 @@ const Showcontent = () => {
                             <hr />{" "}
                           </div>
                         )}
-                        {ele.type === "video" && (
+                        {/* {ele.type === "video" && (
                           <div style={{ margin: "3px",position:"relative", overflow:"hidden", width:"100%", paddingTop:"56.25%"}}>
                             You Can also refer to{" "}
                             <span style={{ color: "green" }}>
@@ -106,9 +107,10 @@ const Showcontent = () => {
                               allowFullScreen
                             ></iframe>{" "}
                           </div>
-                        )}
+                        )} */}
                       </div>
-                    ))}
+                    ))} 
+                    
                     <hr></hr>
                     <div
                       style={{
