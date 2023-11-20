@@ -3,7 +3,6 @@ import { Badge, Button, Card } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Mainscreen from "../components/Mainscreen";
 import axios from "axios";
-//import ReactMarkdown from "react-markdown";
 import parse from "html-react-parser"
 
 const Showcontent = () => {
@@ -75,7 +74,6 @@ const Showcontent = () => {
                       <div key={idx}>
                         {ele.type === "paragraph" && (
                           <div >
-                            {/* <ReactMarkdown>{ele.value}</ReactMarkdown> */}
                             {parse(ele.value)}
                             <br />
                           </div>
@@ -93,21 +91,7 @@ const Showcontent = () => {
                             <hr />{" "}
                           </div>
                         )}
-                        {/* {ele.type === "video" && (
-                          <div style={{ margin: "3px",position:"relative", overflow:"hidden", width:"100%", paddingTop:"56.25%"}}>
-                            You Can also refer to{" "}
-                            <span style={{ color: "green" }}>
-                              {ele.caption}
-                            </span>{" "}
-                            below <br />{" "}
-                            <iframe title="video"
-                            style={{position:"absolute",left:0, right:0, top:0, bottom:0, width:"100%", height:"100%" }}
-                              
-                              src={`https://www.youtube.com/embed/${ele.value}`}
-                              allowFullScreen
-                            ></iframe>{" "}
-                          </div>
-                        )} */}
+                        
                       </div>
                     ))} 
                     

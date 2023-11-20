@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Accordion, Button, Card, Form, FormControl, Nav } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import Mainscreen from "../../components/Mainscreen";
-// import axios from "axios";   it had been imported bcz we were fetching notes diretly from the server's api
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNoteAction, listNotes } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
@@ -45,9 +44,6 @@ const AllContents = () => {
     // fetchNotes();
     userInfo && setAdmin(userInfo.isAdmin);
     dispatch(listNotes()); // redirecting to listNotes() defined within notesAction.js
-   /*  if (!userInfo ) {
-      navigate("/");
-    } */
     
   }, [dispatch, noteCreate, noteUpdate, noteDelete, navigate, userInfo]); // whenever any of this are changes the useEffect rerender the page
 

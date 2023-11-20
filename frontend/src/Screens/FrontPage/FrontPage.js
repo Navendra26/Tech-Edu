@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/Errormessage";
 import { list10sortedNotes } from "../../actions/notesAction";
-import { Result } from "./SlideShow";
+import { Result } from "./contentBoxes";
 import user1 from "./images/user1.jpg";
 import user2 from "./images/user2.jpg";
 
-
-/* https://source.unsplash.com/1200x400/?coding,javascript */
 const FrontPage = () => {
   const dispatch = useDispatch();
   const [clicked, setClicked] = useState(false);
@@ -29,58 +27,12 @@ const FrontPage = () => {
     dispatch(list10sortedNotes());
   }, [dispatch]);
 
-  /* const toggleHadler = () => {
-    clicked ? setClicked(false) : setClicked(true);
-    clicked
-      ? setArrow("fa-solid fa-chevron-left")
-      : setArrow("fa-solid fa-chevron-right");
-  }; */
   return (
     <>
-      {/* <marquee direction="left" scrollamount="5" className="marquee">
-        {" "}
-        This is the best website for your up Skilling
-      </marquee> */}
+   
       <div style={{overflow:"hidden"}}>
         <section className="frontend">
-         {/*  <aside style={{ width: clicked ? "30px" : "" }} className="sidenav">
-            <i
-              onClick={toggleHadler}
-              className={arrow}
-              style={{
-                cursor: "pointer",
-                float: "right",
-                marginTop: "-10px",
-                paddingRight: "5px",
-              }}
-            ></i>
-            <h5
-              className="pt-3 text-center"
-              style={{
-                textOrientation: clicked ? "upright" : "",
-                writingMode: clicked ? "vertical-lr" : "",
-                fontWeight: clicked ? "600" : "bold",
-              }}
-            >
-              Our Contents
-            </h5>
-            <hr className="py-0" />
-            <div className="list">
-              {categ.map((value) =>
-                clicked ? (
-                  ""
-                ) : (
-                  <Link
-                    to={`/contents/${value.replace(/ /g, " ").toLowerCase()}`}
-                  >
-                    {" "}
-                    
-                    {value}
-                  </Link>
-                )
-              )}
-            </div>
-          </aside> */}
+         
           <section className="header">
             <header className="headers">
               <h1>Ed-TECH Platform</h1>

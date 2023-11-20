@@ -1,7 +1,6 @@
 import "./App.css";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
-import LandingPage from "./Screens/Landing/LandingPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllContents from "./Screens/MyNotes/AllContents";
 import LoginScreen from "./Screens/LoginScreen/LoginScreen";
@@ -15,7 +14,6 @@ import Showcontent from "./Screens/Showcontent";
 import Catagorialcontent from "./Screens/MyNotes/Catagorialcontent";
 import Contact from "./Screens/ContactUs/Contact";
 import About from "./Screens/AboutPage/About";
-import Dashboard from "./components/Dashboard/Dashboard";
 import { useSelector } from "react-redux";
 
 const App = () => {
@@ -38,10 +36,7 @@ const App = () => {
       <main>
         <Routes>
           
-          {admin && <Route path="/admin" Component={Dashboard} />}
-          { !admin && <Route path="admin" element={<h1 style={{color:"red"}}>PAGE NOT FOUND</h1>} />}
           <Route path="/" Component={FrontPage} />
-          <Route path="auth" Component={LandingPage} />
           <Route path="login" Component={LoginScreen} />
           <Route path="profile" Component={ProfileScreen} />
           <Route path="register" Component={RegisterScreen} />

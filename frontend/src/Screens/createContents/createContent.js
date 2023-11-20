@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { createNoteAction } from "../../actions/notesAction";
 import Loading from "../../components/Loading";
 import JoditEditor from 'jodit-react';
-// import ReactMarkdown from 'react-markdown';
 
 function CreateNote() {
   const editor = useRef(null);
@@ -239,23 +238,7 @@ function CreateNote() {
                       <Form.Label>
                         <b>Paragraph</b>
                       </Form.Label>
-                      {/*  <Form.Control
-                      as="textarea"
-                      value={element.value}
-                      placeholder="Enter the content"
-                      rows={4}
-                      onChange={(e) =>
-                        updateElementValue(element.id, e.target.value)
-                      }
-                    />
-                { (element.value !== "") && 
-                 ( <Card>
-                    <Card.Header>Content Preview</Card.Header>
-                    <Card.Body>
-                      <ReactMarkdown>{element.value}</ReactMarkdown>
-                    </Card.Body>
-                  </Card>)
-                } */}
+                      
                       <JoditEditor
                         ref={editor}
                         value={element.value}
@@ -297,28 +280,7 @@ function CreateNote() {
                     )}
                   </Form.Group>
                 )}
-                {/* {element.type === "video" && (
-                  <Form.Group controlId={`video-${element.id}`}>
-                    <Form.Label>YouTube Video URL</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={element.value}
-                      placeholder="Enter the YouTube video URL"
-                      onChange={(e) =>
-                        updateElementValue(element.id, e.target.value)
-                      }
-                    />
-                    <Form.Label>Video Caption</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={element.caption}
-                      placeholder="Enter the video caption"
-                      onChange={(e) =>
-                        updateElementCaption(element.id, e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                )} */}
+                
                 <Button
                   variant="danger"
                   className="bg-danger"
@@ -343,9 +305,7 @@ function CreateNote() {
               <Button variant="success" onClick={() => addElement("image")}>
                 <i className="fa fa-plus"></i>image
               </Button>
-             {/*  <Button variant="success" onClick={() => addElement("video")}>
-                <i className="fa fa-link"></i> Add YouTube Video
-              </Button> */}
+
             </div>
 
             <Button type="submit" variant="primary">

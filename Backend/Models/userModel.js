@@ -1,7 +1,3 @@
-/* model defines that what types of data user is going to have
-   { like user is going to have name, password, emails, picture} 
-   this user data is going to store here
-   */
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 

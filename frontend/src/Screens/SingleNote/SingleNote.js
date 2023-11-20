@@ -7,11 +7,10 @@ import { deleteNoteAction, updateNoteAction } from "../../actions/notesAction";
 import ErrorMessage from "../../components/Errormessage";
 import Loading from "../../components/Loading";
 import { useNavigate, useParams } from "react-router-dom";
-// import  ReactMarkdown  from "react-markdown";
 import JoditEditor from "jodit-react";
 
-function SingleNote({ match }) {
-  // @deprecated: match come from react router dom for matching any value (here it is used for matchin our note._id) <- for this we used useParams.id
+function SingleNote() {
+  
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
@@ -185,24 +184,7 @@ function SingleNote({ match }) {
             {elements.map((element) => (
               <React.Fragment key={element.id}>
                 {element.type === "paragraph" && (
-                //   <Form.Group controlId={`content-${element.id}`}>
-                //     <Form.Label>Paragraph</Form.Label>
-                //     <Form.Control
-                //       as="textarea"
-                //       value={element.value}
-                //       placeholder="Enter the content"
-                //       rows={4}
-                //       onChange={(e) =>
-                //         updateElementValue(element.id, e.target.value)
-                //       }
-                //     />
-                //      <Card>
-                //     <Card.Header>Content Preview</Card.Header>
-                //     <Card.Body>
-                //       <ReactMarkdown>{element.value}</ReactMarkdown>
-                //     </Card.Body>
-                //   </Card>
-                //   </Form.Group>
+                
                 <JoditEditor
                   //ref={editor}
                   value={element.value}
@@ -242,28 +224,7 @@ function SingleNote({ match }) {
                  )}
                   </Form.Group>
                 )}
-               {/*  {element.type === "video" && (
-                  <Form.Group controlId={`video-${element.id}`}>
-                    <Form.Label>YouTube Video URL</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={element.value}
-                      placeholder="Enter the YouTube video URL"
-                      onChange={(e) =>
-                        updateElementValue(element.id, e.target.value)
-                      }
-                    />
-                    <Form.Label>Video Caption</Form.Label>
-                    <Form.Control
-                      type="text"
-                      value={element.caption}
-                      placeholder="Enter the video caption"
-                      onChange={(e) =>
-                        updateElementCaption(element.id, e.target.value)
-                      }
-                    />
-                  </Form.Group>
-                )} */}
+              
                 <Button
                  variant="danger"
                   className="bg-danger"
@@ -288,9 +249,6 @@ function SingleNote({ match }) {
               <Button variant="success" onClick={() => addElement("image")}>
                 <i className="fa fa-plus"></i>image
               </Button>
-{/*               <Button variant="success" onClick={() => addElement("video")}>
-                <i className="fa fa-link"></i> Add YouTube Video
-              </Button> */}
             </div>
             {loading && <Loading size={50} />}
             <Button variant="primary" type="submit">

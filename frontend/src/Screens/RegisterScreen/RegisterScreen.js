@@ -1,4 +1,3 @@
-// import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -55,8 +54,7 @@ const RegisterScreen = () => {
           if (password !== confirmpassword) {
               setMessage("Passwords Do not Match");
           }
-          // (After using redux)
-          // dispatching all of these stuff from register() definded under userAction.js file
+          
           else {
               dispatch(register(name, email, password, isAdmin, pic));
               setMessage("Successfully Registered")
@@ -75,41 +73,6 @@ const RegisterScreen = () => {
       dispatch(register(name, email, password, isAdmin, pic));
       setMessage("Successfully Registered");
     }
-    /* else {
-      setMessage(null);
-      // calling to api
-      try {
-        const config = {
-          //whenever we request an api it takes json data so we need to provide some headers
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-
-        setLoading(true); //before requesting data it should be true for loading of server
-
-        // fetching data by axios , calling api from server
-        const { data } = await axios.post(
-          "/api/users",
-          {
-            name,
-            email,
-            password,
-            pic
-          },
-          config
-        );
-
-        //console.log(data);
-        // after successfully login store data in our localstorage
-        setLoading(false);
-        localStorage.setItem("userInfo", JSON.stringify(data));
-      } catch (error) {
-        setError(error.response.data.message);
-        setLoading(false);
-      }
-      
-    } */
   };
 
   // cloudnary allow us to upload images (this is the logic to upload an image over here to the cloudinary)

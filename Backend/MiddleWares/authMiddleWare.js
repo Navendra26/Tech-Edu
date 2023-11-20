@@ -1,5 +1,3 @@
-// jsonwebtoken (JWT) is used for create token for the users and 
-// it certifies the user identity, and sends it to the client.
 const expressAsyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 const User = require("../Models/userModel");

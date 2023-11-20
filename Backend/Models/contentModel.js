@@ -1,7 +1,3 @@
-/* model defines that what types of data in notes is going to have
-   { like note is going to have title, content, catagory, user} 
-   this note data is going to store here
-   */
 const mongoose = require('mongoose');
    
    const contentSchema = mongoose.Schema(

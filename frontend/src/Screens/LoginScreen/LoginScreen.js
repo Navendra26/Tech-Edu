@@ -35,34 +35,6 @@ const LoginScreen = () => {
     e.preventDefault();
 
     dispatch(login(email,password))  // accessing via calling or redirecting to the login() defined in userAction.js
-  
-    /* try {              // code before using redux and now this block of code is written within userAction.js file
-      const config = {
-        //whenever we request an api it takes json data so we need to provide some headers
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-
-      setLoading(true); //before requesting data it should be true for loading of server
-
-      const { data } = await axios.post(
-        // fetching data by axios
-        "/api/users/login",
-        {
-          email,
-          password,
-        },
-        config
-      );
-      console.log(data);
-      // after successfully login store data in our localstorage
-      localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
-    } catch (error) {
-      setError(error.response.data.message);
-      setLoading(false);
-    } */
     
   };
 

@@ -93,7 +93,7 @@ const Header = () => {
             ) : (
               <Nav >
                 <Nav.Link>
-                  <Link to="/auth">Login/signUp</Link>
+                  <Link to="/login">Login/signUp</Link>
                 </Nav.Link>
               </Nav>
             )}
