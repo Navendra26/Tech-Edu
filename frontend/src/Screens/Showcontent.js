@@ -89,7 +89,7 @@ const Showcontent = () => {
                                  {ele.caption}
                               </i>
                             </div>{" "}
-                            <img style={{width:"100%", height:"auto"}}  src={ele.value} alt=""></img>{" "}
+                            <img style={{width:"100%", height:"auto"}}  src={ele.value} alt="img"></img>{" "}
                             <hr />{" "}
                           </div>
                         )}

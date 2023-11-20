@@ -1,5 +1,3 @@
-// react-markdown -> whenever we type anything it helps to convert file into markdown file like README.md file
-
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Card, Form, FormSelect } from "react-bootstrap";
 import Mainscreen from "../../components/Mainscreen";

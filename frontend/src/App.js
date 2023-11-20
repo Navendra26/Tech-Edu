@@ -6,7 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AllContents from "./Screens/MyNotes/AllContents";
 import LoginScreen from "./Screens/LoginScreen/LoginScreen";
 import RegisterScreen from "./Screens/RegisterScreen/RegisterScreen";
-import CreateNote from "./Screens/createNote/createNote";
+import CreateNote from "./Screens/createContents/createContent";
 import SingleNote from "./Screens/SingleNote/SingleNote";
 import { useEffect, useState } from "react";
 import ProfileScreen from "./Screens/profileScreen/ProfileScreen";

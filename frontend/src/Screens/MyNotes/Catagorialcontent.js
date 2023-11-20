@@ -66,7 +66,7 @@ const Catagorialcontent = () => {
         </Button>
       </Link>
       }
-       <Nav className="m-auto float-md-right">
+       <Nav className={admin ? "m-auto float-md-right":"m-auto float-md-center"}>
             <Form >
               <FormControl
                 type="text"

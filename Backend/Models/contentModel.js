@@ -2,7 +2,6 @@
    { like note is going to have title, content, catagory, user} 
    this note data is going to store here
    */
-   const { ObjectId } = require('mongodb');
 const mongoose = require('mongoose');
    
    const contentSchema = mongoose.Schema(

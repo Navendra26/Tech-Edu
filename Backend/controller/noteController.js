@@ -1,5 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const Content = require("../Models/noteModel");
+const Content = require("../Models/contentModel");
 
 const getNotes = asyncHandler(async (req, res) => {
   const notes = await Content.find(/* {user: req.user._id} */);  // we have to access notes for particular user. For this we need to provide userId as parameter in find() query of mongoDB from middleware

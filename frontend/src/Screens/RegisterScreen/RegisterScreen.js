@@ -233,9 +233,9 @@ const RegisterScreen = () => {
             Register
           </Button>
         </Form>
-        <Row className="py-3">
+        <Row className="">
           <Col>
-            Have an Account ? <Link to="/login">Login</Link>
+            Have an Account ? <Link style={{color:"blue"}} to="/login">Login</Link>
           </Col>
         </Row>
       </div>
